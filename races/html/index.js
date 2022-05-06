@@ -54,6 +54,7 @@ $(function() {
             $("#timeout").val(data.defaultTimeout)
             $("#delay").val(data.defaultDelay)
             $("#ai_vehicle").val(data.defaultVehicle)
+            $("#ai_ped").val(data.defaultPed)
             $("#rtype").change()
             $("#registerPanel").show();
             openPanel = "register"
@@ -409,7 +410,8 @@ $(function() {
     $("#spawn_ai").click(function() {
         $.post("https://races/spawn_ai", JSON.stringify({
             aiName: $("#ai_name").val(),
-            vehicle: $("#ai_vehicle").val()
+            vehicle: $("#ai_vehicle").val(),
+            ped: $("#ai_ped").val()
         }));
     });
 

@@ -545,6 +545,12 @@ local function finishRace(time)
             SetVehicleColours(veh, colorPri, colorSec)
         end
     end
+    if aiState ~= nil then
+        for aiName, driver in pairs(aiState.drivers) do
+            SetModelAsNoLongerNeeded(aiState.drivers[aiName].ped)
+            SetModelAsNoLongerNeeded(aiState.drivers[aiName].vehicle)
+        end
+    end
     raceState = STATE_IDLE
 end
 
@@ -962,7 +968,7 @@ local function startRace(delay)
     if delay ~= nil and delay >= 5 then
         if aiState ~= nil then
             for aiName, driver in pairs(aiState.drivers) do
-                SetEntityInvincible(driver.ped, false)
+                SetEntityInvincible(aiState.drivers[aiName].ped, false)
                 TaskEnterVehicle(aiState.drivers[aiName].ped, aiState.drivers[aiName].vehicle, 10000, -1, 1.0, 1, 0)
             end
         end
@@ -1070,7 +1076,7 @@ local function deleteAIDriver(aiName)
     end
 end
 
-local function spawnAIDriver(aiName, vehicleHash)
+local function spawnAIDriver(aiName, vehicleHash, pedHash)
     if 0 == roleBits & ROLE_REGISTER then
         sendMessage("Permission required.\n")
         return
@@ -1080,23 +1086,23 @@ local function spawnAIDriver(aiName, vehicleHash)
             if aiState.drivers[aiName] ~= nil then
                 if nil == aiState.drivers[aiName].vehicle and nil == aiState.drivers[aiName].ped then
                     vehicleHash = nil == vehicleHash and "t20" or vehicleHash
-                    if IsModelInCdimage(vehicleHash) == 1 and IsModelAVehicle(vehicleHash) == 1 then
+					pedHash = nil == pedHash and "a_f_y_beach_01" or pedHash
+                    if IsModelInCdimage(vehicleHash) == 1 and IsModelAVehicle(vehicleHash) == 1 and IsModelInCdimage(pedHash) == 1 and IsModelAPed(pedHash) == 1 then
                         RequestModel(vehicleHash)
                         while not HasModelLoaded(vehicleHash) do
                             Citizen.Wait(0)
                         end
                         aiState.drivers[aiName].vehicle = CreateVehicle(vehicleHash, aiState.drivers[aiName].startWP, aiState.drivers[aiName].heading, true, false)
-                        SetVehicleEngineOn(aiState.drivers[aiName].vehicle, true, true, false)
-                        SetModelAsNoLongerNeeded(vehicleHash)
+                        SetVehicleEngineOn(aiState.drivers[aiName].vehicle, true, true, false)                     
 
-                        local pedHash = "a_f_y_beach_01"
                         RequestModel(pedHash)
                         while not HasModelLoaded(pedHash) do
                             Citizen.Wait(0)
                         end
                         aiState.drivers[aiName].ped = CreatePed(PED_TYPE_CIVFAMALE, pedHash, aiState.drivers[aiName].startWP, aiState.drivers[aiName].heading, true, false)
                         SetEntityInvincible(aiState.drivers[aiName].ped, true)
-                        SetModelAsNoLongerNeeded(pedHash)
+                        SetPedRandomComponentVariation(aiState.drivers[aiName].ped, 0)
+                        SetPedRandomProps(aiState.drivers[aiName].ped)
 
                         SetDriverAbility(aiState.drivers[aiName].ped, 100.0)
                         SetDriverAggressiveness(aiState.drivers[aiName].ped, 0.0)
@@ -1109,7 +1115,7 @@ local function spawnAIDriver(aiName, vehicleHash)
 
                         sendMessage("AI driver '" .. aiName .. "' spawned.\n")
                     else
-                        sendMessage("Cannot spawn vehicle.  Invalid vehicle.\n")
+                        sendMessage("Cannot spawn vehicle.  Invalid vehicle or ped.\n")
                     end
                 else
                     sendMessage("Vehicle and driver already spawned.\n")
@@ -1462,7 +1468,11 @@ RegisterNUICallback("spawn_ai", function(data)
     if "" == vehicle then
         vehicle = nil
     end
-    spawnAIDriver(aiName, vehicle)
+    local ped = data.ped
+    if "" == ped then
+        ped = nil
+    end
+    spawnAIDriver(aiName, vehicle, ped)
 end)
 
 RegisterNUICallback("list_ai", function()
@@ -1897,7 +1907,7 @@ AddEventHandler("races:register", function(rIndex, coord, isPublic, trackName, o
             end
         end
 
-        SetPedCoordsKeepVehicle(PlayerPedId(), coord.x, coord.y, coord.z)
+        SetPedCoordsKeepVehicle(GetPlayerPed(PlayerId()), coord.x, coord.y, coord.z)
 
         starts[rIndex] = {
             isPublic = isPublic,
