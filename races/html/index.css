@@ -73,6 +73,10 @@ body {
     width: 80%;
 }
 
+#main_load {
+    width: 25%
+}
+
 #main_blt {
     width: 25%;
 }
@@ -81,15 +85,19 @@ body {
     width: 25%;
 }
 
-#main_namePublic {
+#main_name_pub {
     width: 80%;
 }
 
-#main_bltPublic {
+#main_load_pub {
+    width: 25%
+}
+
+#main_blt_pub {
     width: 25%;
 }
 
-#main_listPublic {
+#main_list_pub {
     width: 25%;
 }
 
@@ -141,11 +149,27 @@ body {
     width: 25%;
 }
 
-#mEdit {
+#savep {
     width: 25%;
 }
 
-#mRegister {
+#loadp {
+    width: 25%;
+}
+
+#change_dstyle {
+    width: 25%;
+}
+
+#dstyle {
+    width: 25%;
+}
+
+#main_edit {
+    width: 25%;
+}
+
+#main_register {
     width: 25%;
 }
 
@@ -171,7 +195,7 @@ body {
     width: 25%;
 }
 
-#reverse {
+#edit_reverse {
     width: 25%;
 }
 
@@ -182,11 +206,11 @@ body {
 /*
 #edit_load {
 }
-#save {
+#edit_save {
 }
-#overwrite {
+#edit_overwrite {
 }
-#delete {
+#edit_delete {
 }
 #edit_blt {
 }
@@ -194,30 +218,30 @@ body {
 }
 */
 
-#edit_namePublic {
+#edit_name_pub {
     width: 80%;
 }
 
 /*
-#edit_loadPublic {
+#edit_load_pub {
 }
-#savePublic {
+#edit_save_pub {
 }
-#overwritePublic {
+#edit_overwrite_pub {
 }
-#deletePublic {
+#edit_delete_pub {
 }
-#edit_bltPublic {
+#edit_blt_pub {
 }
-#edit_listPublic {
+#edit_list_pub {
 }
 */
 
-#eMain {
+#edit_main {
     width: 25%;
 }
 
-#eRegister {
+#edit_register {
     width: 25%;
 }
 
@@ -251,25 +275,20 @@ body {
     width: 25%;
 }
 
-#register_namePublic {
+#register_name_pub {
     width: 80%;
 }
 
-#register_loadPublic {
+#register_load_pub {
     width: 25%;
 }
 
-#register_bltPublic {
+#register_blt_pub {
     width: 25%;
 }
 
-#register_listPublic {
+#register_list_pub {
     width: 25%;
-}
-
-#register {
-    width: 25%;
-	height: 45px;
 }
 
 #buyin {
@@ -282,6 +301,10 @@ body {
 
 #timeout {
     width: 10%;
+}
+
+#allowAI {
+    height: 44px;
 }
 
 #rtype {
@@ -301,14 +324,19 @@ body {
     height: 45px;
 }
 
+#register {
+    width: 25%;
+    height: 45px;
+}
+
 #unregister {
     width: 25%;
-	height: 45px;
+    height: 45px;
 }
 
 #start {
     width: 25%;
-	height: 45px;
+    height: 45px;
 }
 
 #delay {
@@ -331,11 +359,15 @@ body {
     width: 10%;
 }
 
+#spawn_ai {
+    width: 10%;
+}
+
 #delete_ai {
     width: 10%;
 }
 
-#spawn_ai {
+#delete_all_ai {
     width: 10%;
 }
 
@@ -343,32 +375,80 @@ body {
     width: 10%;
 }
 
-#rMain {
+#ai_grp_name {
     width: 25%;
 }
 
-#rEdit {
+#load_grp {
+    width: 10%;
+}
+
+#save_grp {
+    width: 10%;
+}
+
+#overwrite_grp {
+    width: 10%;
+}
+
+#delete_grp {
+    width: 10%;
+}
+
+#list_grp {
+    width: 10%;
+}
+
+#ai_grp_name_pub {
+    width: 25%;
+}
+
+#load_grp_pub {
+    width: 10%;
+}
+
+#save_grp_pub {
+    width: 10%;
+}
+
+#overwrite_grp_pub {
+    width: 10%;
+}
+
+#delete_grp_pub {
+    width: 10%;
+}
+
+#list_grp_pub {
+    width: 10%;
+}
+
+#register_main {
+    width: 25%;
+}
+
+#register_edit {
     width: 25%;
 }
 
 #main_close {
     width: 25%;
-	height: 45px;
+    height: 45px;
 }
 
 #edit_close {
     width: 25%;
-	height: 45px;
+    height: 45px;
 }
 
 #register_close {
     width: 25%;
-	height: 45px;
+    height: 45px;
 }
 
 #reply_close {
     width: 50%;
-	height: 50px;
+    height: 50px;
 }
 
 #replyPanel {
