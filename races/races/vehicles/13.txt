@@ -1,0 +1,16 @@
+airbus
+brickade
+bus
+coach
+pbus2
+rallytruck
+rentalbus
+taxi
+tourbus
+trash
+trash2
+wastelander
+
+ambulance
+firetruk
+pbus

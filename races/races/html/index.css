@@ -1,0 +1,573 @@
+/*
+
+Copyright (c) 2022, Neil J. Tan
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+*/
+
+body {
+    background: none !important;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+#mainPanel {
+    text-align: center;
+    font-size: 25px;
+    padding: 25px;
+    color: rgb(0, 255, 0);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 3px solid rgb(0, 0, 255);
+    border-radius: 50px;
+}
+
+#request {
+    width: 25%;
+}
+
+#role {
+    height: 45px;
+}
+
+#main_clear {
+    width: 25%;
+}
+
+#main_name {
+    width: 80%;
+}
+
+#main_load {
+    width: 25%
+}
+
+#main_blt {
+    width: 25%;
+}
+
+#main_list {
+    width: 25%;
+}
+
+#main_name_pub {
+    width: 80%;
+}
+
+#main_load_pub {
+    width: 25%
+}
+
+#main_blt_pub {
+    width: 25%;
+}
+
+#main_list_pub {
+    width: 25%;
+}
+
+#leave {
+    width: 20%;
+}
+
+#rivals {
+    width: 20%;
+}
+
+#respawn {
+    width: 20%;
+}
+
+#results {
+    width: 20%;
+}
+
+#spawn {
+    width: 25%;
+}
+
+#vehicle {
+    width: 25%;
+}
+
+#lvehicles {
+    width: 25%;
+}
+
+#main_vclass {
+    height: 45px;
+}
+
+#speedo {
+    width: 25%;
+}
+
+#change {
+    width: 25%;
+}
+
+#unit {
+    height: 45px;
+}
+
+#funds {
+    width: 25%;
+}
+
+#savep {
+    width: 25%;
+}
+
+#loadp {
+    width: 25%;
+}
+
+#change_dstyle {
+    width: 25%;
+}
+
+#dstyle {
+    width: 25%;
+}
+
+#main_edit {
+    width: 25%;
+}
+
+#main_register {
+    width: 25%;
+}
+
+#main_close {
+    width: 25%;
+    height: 45px;
+}
+
+#editPanel {
+    text-align: center;
+    font-size: 25px;
+    padding: 25px;
+    color: rgb(0, 255, 0);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 3px solid rgb(0, 0, 255);
+    border-radius: 50px;
+}
+
+#edit {
+    width: 25%;
+}
+
+#edit_clear {
+    width: 25%;
+}
+
+#edit_reverse {
+    width: 25%;
+}
+
+#edit_name {
+    width: 80%;
+}
+
+/*
+#edit_load {
+}
+#edit_save {
+}
+#edit_overwrite {
+}
+#edit_delete {
+}
+#edit_blt {
+}
+#edit_list {
+}
+*/
+
+#edit_name_pub {
+    width: 80%;
+}
+
+/*
+#edit_load_pub {
+}
+#edit_save_pub {
+}
+#edit_overwrite_pub {
+}
+#edit_delete_pub {
+}
+#edit_blt_pub {
+}
+#edit_list_pub {
+}
+*/
+
+#edit_main {
+    width: 25%;
+}
+
+#edit_register {
+    width: 25%;
+}
+
+#edit_close {
+    width: 25%;
+    height: 45px;
+}
+
+#registerPanel {
+    text-align: center;
+    font-size: 25px;
+    padding: 10px;
+    color: rgb(0, 255, 0);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 3px solid rgb(0, 0, 255);
+    border-radius: 50px;
+}
+
+#register_name {
+    width: 80%;
+}
+
+#register_load {
+    width: 25%;
+}
+
+#register_blt {
+    width: 25%;
+}
+
+#register_list {
+    width: 25%;
+}
+
+#register_name_pub {
+    width: 80%;
+}
+
+#register_load_pub {
+    width: 25%;
+}
+
+#register_blt_pub {
+    width: 25%;
+}
+
+#register_list_pub {
+    width: 25%;
+}
+
+#buyin {
+    width: 10%;
+}
+
+#laps {
+    width: 10%;
+}
+
+#timeout {
+    width: 10%;
+}
+
+#allowAI {
+    height: 44px;
+}
+
+#rtype {
+    height: 45px;
+}
+
+/*
+#restrict {
+}
+#filename {
+}
+#sveh {
+}
+*/
+
+#register_vclass {
+    height: 45px;
+}
+
+#register {
+    width: 25%;
+    height: 45px;
+}
+
+#unregister {
+    width: 25%;
+    height: 45px;
+}
+
+#start {
+    width: 25%;
+    height: 45px;
+}
+
+#delay {
+    width: 10%;
+}
+
+#ai_name {
+    width: 25%;
+}
+
+#ai_vehicle {
+    width: 25%;
+}
+
+#ai_ped {
+    width: 25%;
+}
+
+#add_ai {
+    width: 10%;
+}
+
+#spawn_ai {
+    width: 10%;
+}
+
+#delete_ai {
+    width: 10%;
+}
+
+#delete_all_ai {
+    width: 10%;
+}
+
+#list_ai {
+    width: 10%;
+}
+
+#ai_grp_name {
+    width: 25%;
+}
+
+#load_grp {
+    width: 10%;
+}
+
+#save_grp {
+    width: 10%;
+}
+
+#overwrite_grp {
+    width: 10%;
+}
+
+#delete_grp {
+    width: 10%;
+}
+
+#list_grp {
+    width: 10%;
+}
+
+#ai_grp_name_pub {
+    width: 25%;
+}
+
+#load_grp_pub {
+    width: 10%;
+}
+
+#save_grp_pub {
+    width: 10%;
+}
+
+#overwrite_grp_pub {
+    width: 10%;
+}
+
+#delete_grp_pub {
+    width: 10%;
+}
+
+#list_grp_pub {
+    width: 10%;
+}
+
+#register_main {
+    width: 25%;
+}
+
+#register_edit {
+    width: 25%;
+}
+
+#register_close {
+    width: 25%;
+    height: 45px;
+}
+
+#replyPanel {
+    text-align: center;
+    padding: 25px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 3px solid rgb(0, 0, 255);
+    border-radius: 10px;
+}
+
+#scroll {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+#message {
+    text-align: left;
+    font-size: 25px;
+    padding: 25px;
+    color: rgb(0, 255, 0);
+}
+
+#reply_close {
+    width: 50%;
+    height: 50px;
+}
+
+#confirmPanel {
+    text-align: center;
+    padding: 25px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 3px solid rgb(0, 0, 255);
+    border-radius: 10px;
+}
+
+#confirm_yes {
+    width: 50%;
+    height: 50px;
+    color: rgb(255, 0, 0);
+}
+
+#confirm_no {
+    width: 50%;
+    height: 50px;
+}
+
+#warning {
+    text-align: left;
+    font-size: 25px;
+    padding: 25px;
+    color: rgb(255, 0, 0);
+}
+
+::placeholder {
+    color: rgb(200, 200, 200);
+    font-size: 15px;
+}
+
+button {
+    padding: 10px;
+    color: rgb(0, 0, 0);
+    margin: 5px;
+    min-width: max-content;
+    background-color: rgb(250, 250, 250);
+    border: 3px groove rgb(0, 0, 255);
+    border-radius: 25px;
+}
+
+input {
+    padding: 10px;
+    color: rgb(0, 0, 0);
+    margin-bottom: 5px;
+    font-size: 15px;
+    background-color: rgb(250, 250, 250);
+    border: 3px groove rgb(0, 0, 255);
+}
+
+select {
+    padding: 10px;
+    color: rgb(0, 0, 0);
+    margin-bottom: 5px;
+    font-size: 15px;
+    background-color: rgb(250, 250, 250);
+    border: 3px groove rgb(0, 0, 255);
+}
+
+option {
+    color: rgb(0, 0, 255);
+    font-size: 15px;
+    background-color: rgb(0, 0, 0);
+    padding: 10px;
+}
+
+button:hover {
+    border: 10px double rgb(0, 255, 0);
+    border-width: medium;
+}
+
+select:hover {
+    border: 10px double rgb(0, 255, 0);
+    border-width: medium;
+}
+
+input:hover {
+    border: 10px double rgb(0, 255, 0);
+    border-width: medium;
+}
+
+option:hover {   /* it doesn't work, but I would really like to :( */
+    color: rgb(0, 0, 255);
+    background-color: rgb(0, 0, 0);
+    border: 1px solid rgb(0, 255, 0);
+    border-width: thick;
+}
+
+option:checked {
+    background-color: rgb(0, 0, 0);
+    color: rgb(0, 255, 0);
+}
