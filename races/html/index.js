@@ -32,33 +32,56 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 $(function() {
     let replyOpen = false;
-    let openPanel = ""
+    let confirmOpen = false;
+    let openPanel = "";
+    var action
 
+    function select_action(object, action, name, isPublic) {
+        if (object == "track") {
+            return (function() {
+                $.post(action, JSON.stringify({
+                    isPublic: isPublic,
+                    trackName: $(name).val()
+                }));
+            });
+        } else if (object == "ai_group") {
+            return (function() {
+                $.post(action, JSON.stringify({
+                    isPublic: isPublic,
+                    name: $(name).val()
+                }));
+            });
+        } else if (object == "all_ai") {
+            return (function() {
+                $.post(action);
+            });
+        };
+    };
+     
     $("#mainPanel").hide();
     $("#editPanel").hide();
     $("#registerPanel").hide();
     $("#replyPanel").hide();
+    $("#confirmPanel").hide();
 
     window.addEventListener("message", function(event) {
         let data = event.data;
         if ("main" == data.panel) {
-            $("#vehicle").val(data.defaultVehicle)
-            $("#dstyle").val(data.DrivingStyle)
+            $("#vehicle").val(data.defaultVehicle);
+            $("#dstyle").val(data.drivingStyle);
             $("#mainPanel").show();
-            openPanel = "main"
+            openPanel = "main";
         } else if ("edit" == data.panel) {
             $("#editPanel").show();
-            openPanel = "edit"
+            openPanel = "edit";
         } else if ("register" == data.panel) {
-            $("#buyin").val(data.defaultBuyin)
-            $("#laps").val(data.defaultLaps)
-            $("#timeout").val(data.defaultTimeout)
-            $("#delay").val(data.defaultDelay)
-            $("#ai_vehicle").val(data.defaultVehicle)
-            $("#ai_ped").val(data.defaultPed)
-            $("#rtype").change()
+            $("#buyin").val(data.defaultBuyin);
+            $("#laps").val(data.defaultLaps);
+            $("#timeout").val(data.defaultTimeout);
+            $("#delay").val(data.defaultDelay);
+            $("#rtype").change();
             $("#registerPanel").show();
-            openPanel = "register"
+            openPanel = "register";
         } else if ("reply" == data.panel) {
             $("#mainPanel").hide();
             $("#editPanel").hide();
@@ -66,11 +89,10 @@ $(function() {
             document.getElementById("message").innerHTML = data.message;
             $("#replyPanel").show();
             replyOpen = true;
-        };
-        if ("edit_close" == data.panel) {
+        } else if ("edit_close" == data.panel) {
             $("#editPanel").hide();
             $.post("https://races/close");
-        }
+        };
     });
 
     /* main panel */
@@ -107,7 +129,7 @@ $(function() {
     $("#main_load_pub").click(function() {
         $.post("https://races/load", JSON.stringify({
             isPublic: true,
-            trackName: $("#main_name").val()
+            trackName: $("#main_name_pub").val()
         }));
     });
 
@@ -229,17 +251,19 @@ $(function() {
     });
 
     $("#edit_overwrite").click(function() {
-        $.post("https://races/overwrite", JSON.stringify({
-            isPublic: false,
-            trackName: $("#edit_name").val()
-        }));
+        $("#editPanel").hide();
+        action = select_action("track", "https://races/overwrite", "#edit_name", false);
+        document.getElementById("warning").innerHTML = "Do you really want to overwrite private track '" + $("#edit_name").val() + "' ?";
+        $("#confirmPanel").show();
+        confirmOpen = true;
     });
 
     $("#edit_delete").click(function() {
-        $.post("https://races/delete", JSON.stringify({
-            isPublic: false,
-            trackName: $("#edit_name").val()
-        }));
+        $("#editPanel").hide();
+        action = select_action("track", "https://races/delete", "#edit_name", false);
+        document.getElementById("warning").innerHTML = "Do you really want to delete private track '" + $("#edit_name").val() + "' ?";
+        $("#confirmPanel").show();
+        confirmOpen = true;
     });
 
     $("#edit_blt").click(function() {
@@ -270,17 +294,19 @@ $(function() {
     });
 
     $("#edit_overwrite_pub").click(function() {
-        $.post("https://races/overwrite", JSON.stringify({
-            isPublic: true,
-            trackName: $("#edit_name_pub").val()
-        }));
+        $("#editPanel").hide();
+        action = select_action("track", "https://races/overwrite", "#edit_name_pub", true);
+        document.getElementById("warning").innerHTML = "Do you really want to overwrite public track '" + $("#edit_name_pub").val() + "' ?";
+        $("#confirmPanel").show();
+        confirmOpen = true;
     });
 
     $("#edit_delete_pub").click(function() {
-        $.post("https://races/delete", JSON.stringify({
-            isPublic: true,
-            trackName: $("#edit_name_pub").val()
-        }));
+        $("#editPanel").hide();
+        action = select_action("track", "https://races/delete", "#edit_name_pub", true);
+        document.getElementById("warning").innerHTML = "Do you really want to delete public track '" + $("#edit_name_pub").val() + "' ?";
+        $("#confirmPanel").show();
+        confirmOpen = true;
     });
 
     $("#edit_blt_pub").click(function() {
@@ -358,41 +384,41 @@ $(function() {
 
     $("#rtype").change(function() {
         if ($("#rtype").val() == "norm") {
-            $("#rest").hide()
-            $("#file").hide()
-            $("#vclass").hide()
-            $("#sveh").hide()
+            $("#rest").hide();
+            $("#file").hide();
+            $("#vclass").hide();
+            $("#sveh").hide();
         } else if ($("#rtype").val() == "rest") {
-            $("#rest").show()
-            $("#file").hide()
-            $("#vclass").hide()
-            $("#sveh").hide()
+            $("#rest").show();
+            $("#file").hide();
+            $("#vclass").hide();
+            $("#sveh").hide();
         } else if ($("#rtype").val() == "class") {
-            $("#rest").hide()
+            $("#rest").hide();
             if ($("#register_vclass").val() == "-1") {
-                $("#file").show()
+                $("#file").show();
             } else {
-                $("#file").hide()
-            }
-            $("#vclass").show()
-            $("#sveh").hide()
+                $("#file").hide();
+            };
+            $("#vclass").show();
+            $("#sveh").hide();
         } else if ($("#rtype").val() == "rand") {
-            $("#rest").hide()
-            $("#file").show()
-            $("#vclass").show()
-            $("#sveh").show()
-        }
-    })
+            $("#rest").hide();
+            $("#file").show();
+            $("#vclass").show();
+            $("#sveh").show();
+        };
+    });
 
     $("#register_vclass").change(function() {
         if ($("#rtype").val() == "class") {
             if ($("#register_vclass").val() == "-1") {
-                $("#file").show()
+                $("#file").show();
             } else {
-                $("#file").hide()
-            }
-        }
-    })
+                $("#file").hide();
+            };
+        };
+    });
 
     $("#register").click(function() {
         $.post("https://races/register", JSON.stringify({
@@ -413,19 +439,19 @@ $(function() {
     });
 
     $("#start").click(function() {
+        $("#registerPanel").hide();
+        $.post("https://races/close");
         $.post("https://races/start", JSON.stringify({
             delay: $("#delay").val()
         }));
-        $("#registerPanel").hide();
-        $.post("https://races/close");
     });
 
     $("#add_ai").click(function() {
+        $("#registerPanel").hide();
+        $.post("https://races/close");
         $.post("https://races/add_ai", JSON.stringify({
             aiName: $("#ai_name").val()
         }));
-        $("#registerPanel").hide();
-        $.post("https://races/close");
     });
 
     $("#spawn_ai").click(function() {
@@ -443,7 +469,11 @@ $(function() {
     });
 
     $("#delete_all_ai").click(function() {
-        $.post("https://races/delete_all_ai");
+        $("#registerPanel").hide();
+        action = select_action("all_ai", "https://races/delete_all_ai", "", false);
+        document.getElementById("warning").innerHTML = "Do you really want to delete all AI (bots)?";
+        $("#confirmPanel").show();
+        confirmOpen = true;
     });
 
     $("#list_ai").click(function() {
@@ -465,17 +495,19 @@ $(function() {
     });
 
     $("#overwrite_grp").click(function() {
-        $.post("https://races/overwrite_grp", JSON.stringify({
-            isPublic: false,
-            name: $("#ai_grp_name").val()
-        }));
+        $("#registerPanel").hide();
+        action = select_action("ai_group", "https://races/overwrite_grp", "#ai_grp_name", false)
+        document.getElementById("warning").innerHTML = "Do you really want to overwrite private AI group '" + $("#ai_grp_name").val() + "' ?"
+        $("#confirmPanel").show();
+        confirmOpen = true;
     });
 
     $("#delete_grp").click(function() {
-        $.post("https://races/delete_grp", JSON.stringify({
-            isPublic: false,
-            name: $("#ai_grp_name").val()
-        }));
+        $("#registerPanel").hide();
+        action = select_action("ai_group", "https://races/delete_grp", "#ai_grp_name", false);
+        document.getElementById("warning").innerHTML = "Do you really want to delete private AI group '" + $("#ai_grp_name").val() + "' ?";
+        $("#confirmPanel").show();
+        confirmOpen = true;
     });
 
     $("#list_grp").click(function() {
@@ -499,17 +531,19 @@ $(function() {
     });
 
     $("#overwrite_grp_pub").click(function() {
-        $.post("https://races/overwrite_grp", JSON.stringify({
-            isPublic: true,
-            name: $("#ai_grp_name_pub").val()
-        }));
+        $("#registerPanel").hide();
+        action = select_action("ai_group", "https://races/overwrite_grp", "#ai_grp_name_pub", true);
+        document.getElementById("warning").innerHTML = "Do you really want to overwrite public AI group '" + $("#ai_grp_name_pub").val() + "' ?";
+        $("#confirmPanel").show();
+        confirmOpen = true;
     });
 
     $("#delete_grp_pub").click(function() {
-        $.post("https://races/delete_grp", JSON.stringify({
-            isPublic: true,
-            name: $("#ai_grp_name_pub").val()
-        }));
+        $("#registerPanel").hide();
+        action = select_action("ai_group", "https://races/delete_grp", "#ai_grp_name_pub", true);
+        document.getElementById("warning").innerHTML = "Do you really want to delete public AI group '" + $("#ai_grp_name_pub").val() + "' ?";
+        $("#confirmPanel").show();
+        confirmOpen = true;
     });
 
     $("#list_grp_pub").click(function() {
@@ -537,17 +571,34 @@ $(function() {
         $.post("https://races/close");
     });
 
+    /* confirm panel */
+    $("#confirm_yes").click(function() {
+        $("#confirmPanel").hide();
+        action();
+    });
+
+    $("#confirm_no").click(function() {
+        $("#confirmPanel").hide();
+        if ("edit" == openPanel) {
+            $("#editPanel").show()
+        } else if ("register" == openPanel) {
+            $("#registerPanel").show();
+        } else if ("main" == openPanel) {
+            $("#mainPanel").show()
+        };
+    });
+
     /* reply panel */
     $("#reply_close").click(function() {
         $("#replyPanel").hide();
         replyOpen = false;
         if ("main" == openPanel) {
             $("#mainPanel").show();
-        } else if("edit" == openPanel) {
+        } else if ("edit" == openPanel) {
             $("#editPanel").show();
-        } else if("register" == openPanel) {
+        } else if ("register" == openPanel) {
             $("#registerPanel").show();
-        }
+        };
     });
 
     document.onkeyup = function(data) {
@@ -557,17 +608,27 @@ $(function() {
                 replyOpen = false;
                 if ("main" == openPanel) {
                     $("#mainPanel").show();
-                } else if("edit" == openPanel) {
+                } else if ("edit" == openPanel) {
                     $("#editPanel").show();
-                } else if("register" == openPanel) {
+                } else if ("register" == openPanel) {
                     $("#registerPanel").show();
-                }
+                };
+            } else if (true == confirmOpen){
+                $("#confirmPanel").hide();
+                confirmOpen = false;
+                if ("edit" == openPanel) {
+                    $("#editPanel").show();
+                } else if ("register" == openPanel) {
+                    $("#registerPanel").show();
+                } else if ("main" == openPanel) {
+                    $("#mainPanel").show();
+                };
             } else {
                 $("#mainPanel").hide();
                 $("#editPanel").hide();
                 $("#registerPanel").hide();
                 $.post("https://races/close");
-            }
-        }
-    }
+            };
+        };
+    };
 });

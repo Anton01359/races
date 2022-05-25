@@ -54,7 +54,7 @@ body {
     transform: translate(-50%, -50%);
     background-color: rgba(0, 0, 0, 0.5);
     border: 3px solid rgb(0, 0, 255);
-    border-radius: 45px;
+    border-radius: 50px;
 }
 
 #request {
@@ -173,6 +173,11 @@ body {
     width: 25%;
 }
 
+#main_close {
+    width: 25%;
+    height: 45px;
+}
+
 #editPanel {
     text-align: center;
     font-size: 25px;
@@ -184,7 +189,7 @@ body {
     transform: translate(-50%, -50%);
     background-color: rgba(0, 0, 0, 0.5);
     border: 3px solid rgb(0, 0, 255);
-    border-radius: 45px;
+    border-radius: 50px;
 }
 
 #edit {
@@ -245,10 +250,15 @@ body {
     width: 25%;
 }
 
+#edit_close {
+    width: 25%;
+    height: 45px;
+}
+
 #registerPanel {
     text-align: center;
     font-size: 25px;
-    padding: 25px;
+    padding: 10px;
     color: rgb(0, 255, 0);
     position: fixed;
     top: 50%;
@@ -256,7 +266,7 @@ body {
     transform: translate(-50%, -50%);
     background-color: rgba(0, 0, 0, 0.5);
     border: 3px solid rgb(0, 0, 255);
-    border-radius: 45px;
+    border-radius: 50px;
 }
 
 #register_name {
@@ -431,24 +441,9 @@ body {
     width: 25%;
 }
 
-#main_close {
-    width: 25%;
-    height: 45px;
-}
-
-#edit_close {
-    width: 25%;
-    height: 45px;
-}
-
 #register_close {
     width: 25%;
     height: 45px;
-}
-
-#reply_close {
-    width: 50%;
-    height: 50px;
 }
 
 #replyPanel {
@@ -473,6 +468,41 @@ body {
     font-size: 25px;
     padding: 25px;
     color: rgb(0, 255, 0);
+}
+
+#reply_close {
+    width: 50%;
+    height: 50px;
+}
+
+#confirmPanel {
+    text-align: center;
+    padding: 25px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 3px solid rgb(0, 0, 255);
+    border-radius: 10px;
+}
+
+#confirm_yes {
+    width: 50%;
+    height: 50px;
+    color: rgb(255, 0, 0);
+}
+
+#confirm_no {
+    width: 50%;
+    height: 50px;
+}
+
+#warning {
+    text-align: left;
+    font-size: 25px;
+    padding: 25px;
+    color: rgb(255, 0, 0);
 }
 
 ::placeholder {
