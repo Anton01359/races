@@ -122,7 +122,7 @@ $(function() {
             document.getElementById("register_name").innerHTML = pvtTrackNames;
         } else {
             document.getElementById("register_name").innerHTML = pubTrackNames;
-        }
+        };
     });
 
     $("#register_load").click(function() {
@@ -246,7 +246,7 @@ $(function() {
             document.getElementById("grp_name").innerHTML = pvtGrpNames;
         } else {
             document.getElementById("grp_name").innerHTML = pubGrpNames;
-        }
+        };
     });
 
     $("#load_grp").click(function() {
@@ -259,9 +259,9 @@ $(function() {
     $("#overwrite_grp").click(function() {
         $("#registerPanel").hide();
         action = select_action("ai_group", "https://races/overwrite_grp", "#grp_name")
-        if ($("#grp_access").val() == "pvt") {
+        if ($("#grp_access0").val() == "pvt") {
             access = "private"
-        } else if ($("#grp_access").val() == "pub") {
+        } else if ($("#grp_access0").val() == "pub") {
             access = "public"
         };
         document.getElementById("warning").innerHTML = "Do you really want to overwrite " + access + " AI group '" + $("#grp_name").val() + "' ?" 
@@ -272,9 +272,9 @@ $(function() {
     $("#delete_grp").click(function() {
         $("#registerPanel").hide();
         action = select_action("ai_group", "https://races/delete_grp", "#grp_name");
-        if ($("#grp_access").val() == "pvt") {
+        if ($("#grp_access0").val() == "pvt") {
             access = "private"
-        } else if ($("#grp_access").val() == "pub") {
+        } else if ($("#grp_access0").val() == "pub") {
             access = "public"
         };
         document.getElementById("warning").innerHTML = "Do you really want to delete " + access + " AI group '" + $("#grp_name").val() + "' ?";
@@ -332,7 +332,7 @@ $(function() {
             document.getElementById("edit_name").innerHTML = pvtTrackNames;
         } else {
             document.getElementById("edit_name").innerHTML = pubTrackNames;
-        }
+        };
     });
 
     $("#edit_load").click(function() {
@@ -345,9 +345,9 @@ $(function() {
     $("#edit_overwrite").click(function() {
         $("#editPanel").hide();
         action = select_action("track", "https://races/overwrite", "#edit_name");
-        if ($("#edit_track_access").val() == "pvt") {
+        if ($("#edit_track_access0").val() == "pvt") {
             access = "private"
-        } else if ($("#edit_track_access").val() == "pub") {
+        } else if ($("#edit_track_access0").val() == "pub") {
             access = "public"
         };
         document.getElementById("warning").innerHTML = "Do you really want to overwrite " + access + $("#edit_name").val() + "' ?";
@@ -358,9 +358,9 @@ $(function() {
     $("#edit_delete").click(function() {
         $("#editPanel").hide();
         action = select_action("track", "https://races/delete", "#edit_name");
-        if ($("#edit_track_access").val() == "pvt") {
+        if ($("#edit_track_access0").val() == "pvt") {
             access = "private"
-        } else if ($("#edit_track_access").val() == "pub") {
+        } else if ($("#edit_track_access0").val() == "pub") {
             access = "public"
         };
         document.getElementById("warning").innerHTML = "Do you really want to delete " + access + " track '" + $("#edit_name").val() + "' ?";
@@ -423,7 +423,7 @@ $(function() {
             document.getElementById("support_name").innerHTML = pvtTrackNames;
         } else {
             document.getElementById("support_name").innerHTML = pubTrackNames;
-        }
+        };
     });
 
     $("#support_load").click(function() {

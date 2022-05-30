@@ -1851,6 +1851,8 @@ RegisterNetEvent("races:trackNames")
 AddEventHandler("races:trackNames", function(isPublic)
     local source = source
     if isPublic ~= nil then
+        local trackNames = {}
+
         local license = true == isPublic and "PUBLIC" or GetPlayerIdentifier(source, 0)
         if license ~= nil then
             local raceData = readData(raceDataFilePath)
@@ -1860,14 +1862,10 @@ AddEventHandler("races:trackNames", function(isPublic)
                 end
                 local tracks = raceData[license]
                 if tracks ~= nil then
-                    local trackNames = {}
                     for trackName in pairs(tracks) do
                         trackNames[#trackNames + 1] = trackName
                     end
                     table.sort(trackNames)
-                    TriggerClientEvent("races:trackNames", source, isPublic, trackNames)
-                else
-                    sendMessage(source, "No saved " .. (true == isPublic and "public" or "private") .. " tracks.\n")
                 end
             else
                 sendMessage(source, "Could not load race data.\n")
@@ -1875,6 +1873,8 @@ AddEventHandler("races:trackNames", function(isPublic)
         else
             sendMessage(source, "Could not get license for player source ID: " .. source .. "\n")
         end
+
+        TriggerClientEvent("races:trackNames", source, isPublic, trackNames)
     else
         sendMessage(source, "Ignoring list event.  Invalid parameters.\n")
    end
@@ -1884,6 +1884,8 @@ RegisterNetEvent("races:aiGrpNames")
 AddEventHandler("races:aiGrpNames", function(isPublic)
     local source = source
     if isPublic ~= nil then
+        local grpNames = {}
+
         local license = true == isPublic and "PUBLIC" or GetPlayerIdentifier(source, 0)
         if license ~= nil then
             local aiGroupData = readData(aiGroupDataFilePath)
@@ -1893,14 +1895,10 @@ AddEventHandler("races:aiGrpNames", function(isPublic)
                 end
                 local groups = aiGroupData[license]
                 if groups ~= nil then
-                    local grpNames = {}
                     for grpName in pairs(groups) do
                         grpNames[#grpNames + 1] = grpName
                     end
                     table.sort(grpNames)
-                    TriggerClientEvent("races:aiGrpNames", source, isPublic, grpNames)
-                else
-                    sendMessage(source, "No saved " .. (true == isPublic and "public" or "private") .. " AI groups.\n")
                 end
             else
                 sendMessage(source, "Could not load AI group data.\n")
@@ -1908,6 +1906,8 @@ AddEventHandler("races:aiGrpNames", function(isPublic)
         else
             sendMessage(source, "Could not get license for player source ID: " .. source .. "\n")
         end
+
+        TriggerClientEvent("races:aiGrpNames", source, isPublic, grpNames)
     else
         sendMessage(source, "Ignoring list AI groups event.  Invalid parameters.\n")
     end

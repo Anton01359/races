@@ -1453,7 +1453,6 @@ local function spawnAIDriver(aiName, vehicleHash, pedHash, coord, heading)
                     }
                 end
                 if nil == aiState.drivers[aiName] then
-                    local player = PlayerPedId()
                     aiState.drivers[aiName] = {
                         netID = nil,
                         raceState = STATE_JOINING,
@@ -1463,6 +1462,8 @@ local function spawnAIDriver(aiName, vehicleHash, pedHash, coord, heading)
                         destSet = false,
                         vehicle = nil,
                         ped = nil,
+                        originalVehicleHash = nil,
+                        rememberedVehicleProps = nil,
                         started = false,
                         currentWP = -1,
                         numWaypointsPassed = 0,
@@ -1471,7 +1472,7 @@ local function spawnAIDriver(aiName, vehicleHash, pedHash, coord, heading)
                         currentLap = 1,
                         lapTimeStart = -1,
                         enteringVehicle = false,
-                        stuckCoord = vector3(coord.x, coord.y, coord.z),
+                        stuckCoord = coord,
                         stuckStart = -1
                     }
                     aiState.numRacing = aiState.numRacing + 1
@@ -1541,6 +1542,8 @@ local function spawnAIDriver(aiName, vehicleHash, pedHash, coord, heading)
                                     SetModelAsNoLongerNeeded(vehicleHash)
                                     SetVehicleEngineOn(driver.vehicle, true, true, false)
                                     SetVehRadioStation(driver.vehicle, "OFF")
+                                    driver.originalVehicleHash = vehicleHash
+                                    driver.rememberedVehicleProps = getVehicleProperties(driver.vehicle)
 
                                     RequestModel(pedHash)
                                     while HasModelLoaded(pedHash) == false do
@@ -1767,7 +1770,7 @@ local function overwriteGrp(access, name)
                 local group = {}
                 for aiName, driver in pairs(aiState.drivers) do
                     if driver.ped ~= nil and driver.vehicle ~= nil then
-                    group[aiName] = {startCoord = GetEntityCoords(driver.vehicle), heading = GetEntityHeading(driver.vehicle), vehicleHash = GetEntityModel(driver.vehicle), pedHash = GetEntityModel(driver.ped), vehicleProps = getVehicleProperties(driver.vehicle), pedProps = getPedProperties(driver.ped)}
+                        group[aiName] = {startCoord = GetEntityCoords(driver.vehicle), heading = GetEntityHeading(driver.vehicle), vehicleHash = GetEntityModel(driver.vehicle), pedHash = GetEntityModel(driver.ped), vehicleProps = getVehicleProperties(driver.vehicle), pedProps = getPedProperties(driver.ped)}
                     else
                         allSpawned = false
                         break
@@ -2169,7 +2172,6 @@ RegisterNUICallback("spawn_ai", function(data)
     if "" == aiName then
         aiName = nil
     end
-    local player = PlayerPedId()
     local vehicle = data.vehicle
     if "" == vehicle then
         vehicle = nil
@@ -2178,11 +2180,12 @@ RegisterNUICallback("spawn_ai", function(data)
     if "" == ped then
         ped = nil
     end
+    local player = PlayerPedId()
     if vehicle == nil or ped == nil then
         if vehicle == nil and ped == nil then
             spawnAIDriver(aiName, nil, nil, GetEntityCoords(player), GetEntityHeading(player))
-        else if vehicle ~= nil and ped == nil then
-            spawnAIDriver(aiName, GetHashKey(vehicle), nil), GetEntityCoords(player), GetEntityHeading(player))
+        elseif vehicle ~= nil and ped == nil then
+            spawnAIDriver(aiName, GetHashKey(vehicle), nil, GetEntityCoords(player), GetEntityHeading(player))
         else
             spawnAIDriver(aiName, nil, GetHashKey(ped), GetEntityCoords(player), GetEntityHeading(player))
         end
@@ -2491,7 +2494,7 @@ RegisterCommand("race", function(_, args)
             if args[4] == nil or args[5] == nil then
                 if args[4] == nil and args[5] == nil then
                     spawnAIDriver(args[3], nil, nil, GetEntityCoords(player), GetEntityHeading(player))
-                else if args[4] ~= nil and args[5] == nil then
+                elseif args[4] ~= nil and args[5] == nil then
                     spawnAIDriver(args[3], GetHashKey(args[4]), nil, GetEntityCoords(player), GetEntityHeading(player))
                 else
                     spawnAIDriver(args[3], nil, GetHashKey(args[5]), GetEntityCoords(player), GetEntityHeading(player))
@@ -2756,6 +2759,12 @@ AddEventHandler("races:unregister", function(rIndex)
         if aiState ~= nil and GetPlayerServerId(PlayerId()) == rIndex then
             for _, driver in pairs(aiState.drivers) do
                 --switchVehicle(driver.ped, originalVehicleHash)
+                if #aiState.randVehicles > 0 then
+                    driver.vehicle = switchVehicle(driver.ped, driver.originalVehicleHash)
+                    if driver.vehicle ~= nil then
+                        setVehicleProperties(driver.vehicle, driver.rememberedVehicleProps)
+                    end
+                end
                 if driver.ped ~= nil then
                     SetEntityAsNoLongerNeeded(driver.ped)
                 end
@@ -3733,6 +3742,13 @@ Citizen.CreateThread(function()
                         end
                     end
                 elseif STATE_IDLE == driver.raceState then
+                    if #aiState.randVehicles > 0 then
+                        driver.vehicle = switchVehicle(driver.ped, driver.originalVehicleHash)
+                        if driver.vehicle ~= nil then
+                            setVehicleProperties(driver.vehicle, driver.rememberedVehicleProps)
+                        end
+                    end
+                    SetEntityAsNoLongerNeeded(driver.vehicle)
                     Citizen.CreateThread(function()
                         while true do
                             if GetVehicleNumberOfPassengers(driver.vehicle) == 0 then
@@ -3743,7 +3759,6 @@ Citizen.CreateThread(function()
                             Citizen.Wait(1000)
                         end
                     end)
-                    SetEntityAsNoLongerNeeded(driver.vehicle)
                     aiState.drivers[aiName] = nil
                     aiState.numRacing = aiState.numRacing - 1
                     if 0 == aiState.numRacing then

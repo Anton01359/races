@@ -145,9 +145,8 @@ If permission is required to register races, the following commands will be rest
 **`/race register (buy-in) (laps) (DNF timeout) (allow AI) rand (filename) (class) (vehicle)`**\
 **`/race unregister`**\
 **`/race start (delay)`**\
-**`/race ai add [name]`**\
-**`/race ai delete (name)`**\
 **`/race ai spawn [name] (vehicle) (ped)`**\
+**`/race ai delete (name)`**\
 **`/race ai list`**\
 **`/race ai loadGrp [access] [name]`**\
 **`/race ai saveGrp [access] [name]`**\
