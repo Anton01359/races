@@ -35,30 +35,33 @@ $(function() {
     let confirmOpen = false;
     let openPanel = "";
     var action
+    var access
 
-    function select_action(object, action, name, isPublic) {
+    function select_action(object, action, name) {
         if (object == "track") {
             return (function() {
                 $.post(action, JSON.stringify({
-                    isPublic: isPublic,
+                    access: $("#edit_track_access").val(),
                     trackName: $(name).val()
                 }));
             });
         } else if (object == "ai_group") {
             return (function() {
                 $.post(action, JSON.stringify({
-                    isPublic: isPublic,
+                    access: $("#grp_access").val(),
                     name: $(name).val()
                 }));
             });
-        } else if (object == "all_ai") {
+        } else if (object == "ai") {
             return (function() {
-                $.post(action);
+                $.post(action, JSON.stringify({
+                    aiName: $(name).val()
+                }));
             });
         };
     };
      
-    $("#mainPanel").hide();
+    $("#supportPanel").hide();
     $("#editPanel").hide();
     $("#registerPanel").hide();
     $("#replyPanel").hide();
@@ -66,15 +69,7 @@ $(function() {
 
     window.addEventListener("message", function(event) {
         let data = event.data;
-        if ("main" == data.panel) {
-            $("#vehicle").val(data.defaultVehicle);
-            $("#dstyle").val(data.drivingStyle);
-            $("#mainPanel").show();
-            openPanel = "main";
-        } else if ("edit" == data.panel) {
-            $("#editPanel").show();
-            openPanel = "edit";
-        } else if ("register" == data.panel) {
+        if ("register" == data.panel) {
             $("#buyin").val(data.defaultBuyin);
             $("#laps").val(data.defaultLaps);
             $("#timeout").val(data.defaultTimeout);
@@ -82,8 +77,14 @@ $(function() {
             $("#rtype").change();
             $("#registerPanel").show();
             openPanel = "register";
+        } else if ("edit" == data.panel) {
+            $("#editPanel").show();
+            openPanel = "edit";
+        } else if ("support" == data.panel) {
+            $("#supportPanel").show();
+            openPanel = "support";
         } else if ("reply" == data.panel) {
-            $("#mainPanel").hide();
+            $("#supportPanel").hide();
             $("#editPanel").hide();
             $("#registerPanel").hide();
             document.getElementById("message").innerHTML = data.message;
@@ -95,54 +96,301 @@ $(function() {
         };
     });
 
-    /* main panel */
+    /* register panel */
+    $("#register_load").click(function() {
+        $.post("https://races/load", JSON.stringify({
+            access: $("#register_track_access").val(),
+            trackName: $("#register_name").val()
+        }));
+    });
+
+    $("#register_blt").click(function() {
+        $.post("https://races/blt", JSON.stringify({
+            access: $("#register_track_access").val(),
+            trackName: $("#register_name").val()
+        }));
+    });
+
+    $("#register_list").click(function() {
+        $.post("https://races/list", JSON.stringify({
+            access: $("#register_track_access").val()
+        }));
+    });
+
+    $("#rtype").change(function() {
+        if ($("#rtype").val() == "norm") {
+            $("#rest").hide();
+            $("#file").hide();
+            $("#vclass").hide();
+            $("#rclass").hide();
+            $("#sveh").hide();
+        } else if ($("#rtype").val() == "rest") {
+            $("#rest").show();
+            $("#file").hide();
+            $("#vclass").hide();
+            $("#rclass").hide();
+            $("#sveh").hide();
+        } else if ($("#rtype").val() == "class") {
+            $("#rest").hide();
+            if ($("#register_vclass").val() == "-1") {
+                $("#file").show();
+            } else {
+                $("#file").hide();
+            };
+            $("#vclass").show();
+            $("#rclass").hide();
+            $("#sveh").hide();
+        } else if ($("#rtype").val() == "rand") {
+            $("#rest").hide();
+            $("#file").show();
+            $("#vclass").hide();
+            $("#rclass").show();
+            $("#sveh").show();
+        };
+    });
+
+    $("#register_vclass").change(function() {
+        if ($("#rtype").val() == "class") {
+            if ($("#register_vclass").val() == "-1") {
+                $("#file").show();
+            } else {
+                $("#file").hide();
+            };
+        };
+    });
+
+    $("#register").click(function() {
+        $.post("https://races/register", JSON.stringify({
+            buyin: $("#buyin").val(),
+            laps: $("#laps").val(),
+            timeout: $("#timeout").val(),
+            allowAI: $("#allowAI").val(),
+            rtype: $("#rtype").val(),
+            restrict: $("#restrict").val(),
+            filename: $("#filename").val(),
+            vclass: $("#register_vclass").val(),
+            vclass: $("#register_rclass").val(),
+            svehicle: $("#svehicle").val()
+        }));
+    });
+
+    $("#unregister").click(function() {
+        $.post("https://races/unregister");
+    });
+
+    $("#start").click(function() {
+        $("#registerPanel").hide();
+        $.post("https://races/close");
+        $.post("https://races/start", JSON.stringify({
+            delay: $("#delay").val()
+        }));
+    });
+
+    $("#spawn_ai").click(function() {
+        $("#registerPanel").hide();
+        $.post("https://races/close");
+        $.post("https://races/spawn_ai", JSON.stringify({
+            aiName: $("#ai_name").val(),
+            vehicle: $("#ai_vehicle").val(),
+            ped: $("#ai_ped").val()
+        }));
+    });
+
+    $("#delete_ai").click(function() {
+        if ($("#ai_name").val() == "") {
+            $("#registerPanel").hide();
+            action = select_action("ai", "https://races/delete_ai", "#ai_name");
+            document.getElementById("warning").innerHTML = "Do you really want to delete all AI?";
+            $("#confirmPanel").show();
+            confirmOpen = true;
+        } else {
+            action = select_action("ai", "https://races/delete_ai", "#ai_name");
+            action()
+        };
+    });
+
+    $("#list_ai").click(function() {
+        $.post("https://races/list_ai");
+    });
+
+    $("#load_grp").click(function() {
+        $.post("https://races/load_grp", JSON.stringify({
+            access: $("#grp_access").val(),
+            name: $("#grp_name").val()
+        }));
+    });
+
+    $("#save_grp").click(function() {
+        $.post("https://races/save_grp", JSON.stringify({
+            access: $("#grp_access").val(),
+            name: $("#grp_name").val()
+        }));
+    });
+
+    $("#overwrite_grp").click(function() {
+        $("#registerPanel").hide();
+        action = select_action("ai_group", "https://races/overwrite_grp", "#grp_name")
+        if ($("#grp_access").val() == "pvt") {
+            access = "private"
+        } else if ($("#grp_access").val() == "pub") {
+            access = "public"
+        };
+        document.getElementById("warning").innerHTML = "Do you really want to overwrite " + access + " AI group '" + $("#grp_name").val() + "' ?" 
+        $("#confirmPanel").show();
+        confirmOpen = true;
+    });
+
+    $("#delete_grp").click(function() {
+        $("#registerPanel").hide();
+        action = select_action("ai_group", "https://races/delete_grp", "#grp_name");
+        if ($("#grp_access").val() == "pvt") {
+            access = "private"
+        } else if ($("#grp_access").val() == "pub") {
+            access = "public"
+        };
+        document.getElementById("warning").innerHTML = "Do you really want to delete " + access + " AI group '" + $("#grp_name").val() + "' ?";
+        $("#confirmPanel").show();
+        confirmOpen = true;
+    });
+
+    $("#list_grp").click(function() {
+        $.post("https://races/list_grp", JSON.stringify({
+            access: $("#grp_access").val()
+        }));
+    });
+
+    $("#register_support").click(function() {
+        $("#registerPanel").hide();
+        $.post("https://races/show", JSON.stringify({
+            panel: "support"
+        }));
+    });
+
+    $("#register_edit").click(function() {
+        $("#registerPanel").hide();
+        $.post("https://races/show", JSON.stringify({
+            panel: "edit"
+        }));
+    });
+
+    $("#register_close").click(function() {
+        $("#registerPanel").hide();
+        $.post("https://races/close");
+    });
+
+    /* edit panel */
+    $("#edit").click(function() {
+        $.post("https://races/edit");
+    });
+
+    $("#edit_clear").click(function() {
+        $.post("https://races/clear");
+    });
+
+    $("#edit_reverse").click(function() {
+        $.post("https://races/reverse");
+    });
+
+    $("#edit_load").click(function() {
+        $.post("https://races/load", JSON.stringify({
+            access: $("#edit_track_access").val(),
+            trackName: $("#edit_name").val()
+        }));
+    });
+
+    $("#edit_save").click(function() {
+        $.post("https://races/save", JSON.stringify({
+            access: $("#edit_track_access").val(),
+            trackName: $("#edit_name").val()
+        }));
+    });
+
+    $("#edit_overwrite").click(function() {
+        $("#editPanel").hide();
+        action = select_action("track", "https://races/overwrite", "#edit_name");
+        if ($("#edit_track_access").val() == "pvt") {
+            access = "private"
+        } else if ($("#edit_track_access").val() == "pub") {
+            access = "public"
+        };
+        document.getElementById("warning").innerHTML = "Do you really want to overwrite " + access + $("#edit_name").val() + "' ?";
+        $("#confirmPanel").show();
+        confirmOpen = true;
+    });
+
+    $("#edit_delete").click(function() {
+        $("#editPanel").hide();
+        action = select_action("track", "https://races/delete", "#edit_name");
+        if ($("#edit_track_access").val() == "pvt") {
+            access = "private"
+        } else if ($("#edit_track_access").val() == "pub") {
+            access = "public"
+        };
+        document.getElementById("warning").innerHTML = "Do you really want to delete " + access + " track '" + $("#edit_name").val() + "' ?";
+        $("#confirmPanel").show();
+        confirmOpen = true;
+    });
+
+    $("#edit_blt").click(function() {
+        $.post("https://races/blt", JSON.stringify({
+            access: $("#edit_track_access").val(),
+            trackName: $("#edit_name").val()
+        }));
+    });
+
+    $("#edit_list").click(function() {
+        $.post("https://races/list", JSON.stringify({
+            access: $("#edit_track_access").val()
+        }));
+    });
+
+    $("#edit_support").click(function() {
+        $("#editPanel").hide();
+        $.post("https://races/show", JSON.stringify({
+            panel: "support"
+        }));
+    });
+
+    $("#edit_register").click(function() {
+        $("#editPanel").hide();
+        $.post("https://races/show", JSON.stringify({
+            panel: "register"
+        }));
+    });
+
+    $("#edit_close").click(function() {
+        $("#editPanel").hide();
+        $.post("https://races/close");
+    });
+
+    /* support panel */
     $("#request").click(function() {
         $.post("https://races/request", JSON.stringify({
             role: $("#role").val()
         }));
     });
 
-    $("#main_clear").click(function() {
+    $("#support_clear").click(function() {
         $.post("https://races/clear");
     });
 
-    $("#main_load").click(function() {
+    $("#support_load").click(function() {
         $.post("https://races/load", JSON.stringify({
-            isPublic: false,
-            trackName: $("#main_name").val()
+            access: $("#support_track_access").val(),
+            trackName: $("#support_name").val()
         }));
     });
 
-    $("#main_blt").click(function() {
+    $("#support_blt").click(function() {
         $.post("https://races/blt", JSON.stringify({
-            isPublic: false,
-            trackName: $("#main_name").val()
+            access: $("#support_track_access").val(),
+            trackName: $("#support_name").val()
         }));
     });
 
-    $("#main_list").click(function() {
+    $("#support_list").click(function() {
         $.post("https://races/list", JSON.stringify({
-            isPublic: false
-        }));
-    });
-
-    $("#main_load_pub").click(function() {
-        $.post("https://races/load", JSON.stringify({
-            isPublic: true,
-            trackName: $("#main_name_pub").val()
-        }));
-    });
-
-    $("#main_blt_pub").click(function() {
-        $.post("https://races/blt", JSON.stringify({
-            isPublic: true,
-            trackName: $("#main_name_pub").val()
-        }));
-    });
-
-    $("#main_list_pub").click(function() {
-        $.post("https://races/list", JSON.stringify({
-            isPublic: true
+            access: $("#support_track_access").val()
         }));
     });
 
@@ -170,7 +418,7 @@ $(function() {
 
     $("#lvehicles").click(function() {
         $.post("https://races/lvehicles", JSON.stringify({
-            vclass: $("#main_vclass").val()
+            vclass: $("#support_vclass").val()
         }));
     });
 
@@ -204,371 +452,36 @@ $(function() {
         }));
     });
 
-    $("#main_edit").click(function() {
-        $("#mainPanel").hide();
+    $("#support_edit").click(function() {
+        $("#supportPanel").hide();
         $.post("https://races/show", JSON.stringify({
             panel: "edit"
         }));
     });
 
-    $("#main_register").click(function() {
-        $("#mainPanel").hide();
+    $("#support_register").click(function() {
+        $("#supportPanel").hide();
         $.post("https://races/show", JSON.stringify({
             panel: "register"
         }));
     });
 
-    $("#main_close").click(function() {
-        $("#mainPanel").hide();
+    $("#support_close").click(function() {
+        $("#supportPanel").hide();
         $.post("https://races/close");
     });
 
-    /* edit panel */
-    $("#edit").click(function() {
-        $.post("https://races/edit");
-    });
-
-    $("#edit_clear").click(function() {
-        $.post("https://races/clear");
-    });
-
-    $("#edit_reverse").click(function() {
-        $.post("https://races/reverse");
-    });
-
-    $("#edit_load").click(function() {
-        $.post("https://races/load", JSON.stringify({
-            isPublic: false,
-            trackName: $("#edit_name").val()
-        }));
-    });
-
-    $("#edit_save").click(function() {
-        $.post("https://races/save", JSON.stringify({
-            isPublic: false,
-            trackName: $("#edit_name").val()
-        }));
-    });
-
-    $("#edit_overwrite").click(function() {
-        $("#editPanel").hide();
-        action = select_action("track", "https://races/overwrite", "#edit_name", false);
-        document.getElementById("warning").innerHTML = "Do you really want to overwrite private track '" + $("#edit_name").val() + "' ?";
-        $("#confirmPanel").show();
-        confirmOpen = true;
-    });
-
-    $("#edit_delete").click(function() {
-        $("#editPanel").hide();
-        action = select_action("track", "https://races/delete", "#edit_name", false);
-        document.getElementById("warning").innerHTML = "Do you really want to delete private track '" + $("#edit_name").val() + "' ?";
-        $("#confirmPanel").show();
-        confirmOpen = true;
-    });
-
-    $("#edit_blt").click(function() {
-        $.post("https://races/blt", JSON.stringify({
-            isPublic: false,
-            trackName: $("#edit_name").val()
-        }));
-    });
-
-    $("#edit_list").click(function() {
-        $.post("https://races/list", JSON.stringify({
-            isPublic: false
-        }));
-    });
-
-    $("#edit_load_pub").click(function() {
-        $.post("https://races/load", JSON.stringify({
-            isPublic: true,
-            trackName: $("#edit_name_pub").val()
-        }));
-    });
-
-    $("#edit_save_pub").click(function() {
-        $.post("https://races/save", JSON.stringify({
-            isPublic: true,
-            trackName: $("#edit_name_pub").val()
-        }));
-    });
-
-    $("#edit_overwrite_pub").click(function() {
-        $("#editPanel").hide();
-        action = select_action("track", "https://races/overwrite", "#edit_name_pub", true);
-        document.getElementById("warning").innerHTML = "Do you really want to overwrite public track '" + $("#edit_name_pub").val() + "' ?";
-        $("#confirmPanel").show();
-        confirmOpen = true;
-    });
-
-    $("#edit_delete_pub").click(function() {
-        $("#editPanel").hide();
-        action = select_action("track", "https://races/delete", "#edit_name_pub", true);
-        document.getElementById("warning").innerHTML = "Do you really want to delete public track '" + $("#edit_name_pub").val() + "' ?";
-        $("#confirmPanel").show();
-        confirmOpen = true;
-    });
-
-    $("#edit_blt_pub").click(function() {
-        $.post("https://races/blt", JSON.stringify({
-            isPublic: true,
-            trackName: $("#edit_name_pub").val()
-        }));
-    });
-
-    $("#edit_list_pub").click(function() {
-        $.post("https://races/list", JSON.stringify({
-            isPublic: true
-        }));
-    });
-
-    $("#edit_main").click(function() {
-        $("#editPanel").hide();
-        $.post("https://races/show", JSON.stringify({
-            panel: "main"
-        }));
-    });
-
-    $("#edit_register").click(function() {
-        $("#editPanel").hide();
-        $.post("https://races/show", JSON.stringify({
-            panel: "register"
-        }));
-    });
-
-    $("#edit_close").click(function() {
-        $("#editPanel").hide();
-        $.post("https://races/close");
-    });
-
-    /* register panel */
-    $("#register_load").click(function() {
-        $.post("https://races/load", JSON.stringify({
-            isPublic: false,
-            trackName: $("#register_name").val()
-        }));
-    });
-
-    $("#register_blt").click(function() {
-        $.post("https://races/blt", JSON.stringify({
-            isPublic: false,
-            trackName: $("#register_name").val()
-        }));
-    });
-
-    $("#register_list").click(function() {
-        $.post("https://races/list", JSON.stringify({
-            isPublic: false
-        }));
-    });
-
-    $("#register_load_pub").click(function() {
-        $.post("https://races/load", JSON.stringify({
-            isPublic: true,
-            trackName: $("#register_name_pub").val()
-        }));
-    });
-
-    $("#register_blt_pub").click(function() {
-        $.post("https://races/blt", JSON.stringify({
-            isPublic: true,
-            trackName: $("#register_name_pub").val()
-        }));
-    });
-
-    $("#register_list_pub").click(function() {
-        $.post("https://races/list", JSON.stringify({
-            isPublic: true
-        }));
-    });
-
-    $("#rtype").change(function() {
-        if ($("#rtype").val() == "norm") {
-            $("#rest").hide();
-            $("#file").hide();
-            $("#vclass").hide();
-            $("#sveh").hide();
-        } else if ($("#rtype").val() == "rest") {
-            $("#rest").show();
-            $("#file").hide();
-            $("#vclass").hide();
-            $("#sveh").hide();
-        } else if ($("#rtype").val() == "class") {
-            $("#rest").hide();
-            if ($("#register_vclass").val() == "-1") {
-                $("#file").show();
-            } else {
-                $("#file").hide();
-            };
-            $("#vclass").show();
-            $("#sveh").hide();
-        } else if ($("#rtype").val() == "rand") {
-            $("#rest").hide();
-            $("#file").show();
-            $("#vclass").show();
-            $("#sveh").show();
+    /* reply panel */
+    $("#reply_close").click(function() {
+        $("#replyPanel").hide();
+        replyOpen = false;
+        if ("register" == openPanel) {
+            $("#registerPanel").show();
+        } else if ("edit" == openPanel) {
+            $("#editPanel").show();
+        } else if ("support" == openPanel) {
+            $("#supportPanel").show();
         };
-    });
-
-    $("#register_vclass").change(function() {
-        if ($("#rtype").val() == "class") {
-            if ($("#register_vclass").val() == "-1") {
-                $("#file").show();
-            } else {
-                $("#file").hide();
-            };
-        };
-    });
-
-    $("#register").click(function() {
-        $.post("https://races/register", JSON.stringify({
-            buyin: $("#buyin").val(),
-            laps: $("#laps").val(),
-            timeout: $("#timeout").val(),
-            allowAI: $("#allowAI").val(),
-            rtype: $("#rtype").val(),
-            restrict: $("#restrict").val(),
-            filename: $("#filename").val(),
-            vclass: $("#register_vclass").val(),
-            svehicle: $("#svehicle").val()
-        }));
-    });
-
-    $("#unregister").click(function() {
-        $.post("https://races/unregister");
-    });
-
-    $("#start").click(function() {
-        $("#registerPanel").hide();
-        $.post("https://races/close");
-        $.post("https://races/start", JSON.stringify({
-            delay: $("#delay").val()
-        }));
-    });
-
-    $("#add_ai").click(function() {
-        $("#registerPanel").hide();
-        $.post("https://races/close");
-        $.post("https://races/add_ai", JSON.stringify({
-            aiName: $("#ai_name").val()
-        }));
-    });
-
-    $("#spawn_ai").click(function() {
-        $.post("https://races/spawn_ai", JSON.stringify({
-            aiName: $("#ai_name").val(),
-            vehicle: $("#ai_vehicle").val(),
-            ped: $("#ai_ped").val()
-        }));
-    });
-
-    $("#delete_ai").click(function() {
-        $.post("https://races/delete_ai", JSON.stringify({
-            aiName: $("#ai_name").val()
-        }));
-    });
-
-    $("#delete_all_ai").click(function() {
-        $("#registerPanel").hide();
-        action = select_action("all_ai", "https://races/delete_all_ai", "", false);
-        document.getElementById("warning").innerHTML = "Do you really want to delete all AI (bots)?";
-        $("#confirmPanel").show();
-        confirmOpen = true;
-    });
-
-    $("#list_ai").click(function() {
-        $.post("https://races/list_ai");
-    });
-
-    $("#load_grp").click(function() {
-        $.post("https://races/load_grp", JSON.stringify({
-            isPublic: false,
-            name: $("#ai_grp_name").val()
-        }));
-    });
-
-    $("#save_grp").click(function() {
-        $.post("https://races/save_grp", JSON.stringify({
-            isPublic: false,
-            name: $("#ai_grp_name").val()
-        }));
-    });
-
-    $("#overwrite_grp").click(function() {
-        $("#registerPanel").hide();
-        action = select_action("ai_group", "https://races/overwrite_grp", "#ai_grp_name", false)
-        document.getElementById("warning").innerHTML = "Do you really want to overwrite private AI group '" + $("#ai_grp_name").val() + "' ?"
-        $("#confirmPanel").show();
-        confirmOpen = true;
-    });
-
-    $("#delete_grp").click(function() {
-        $("#registerPanel").hide();
-        action = select_action("ai_group", "https://races/delete_grp", "#ai_grp_name", false);
-        document.getElementById("warning").innerHTML = "Do you really want to delete private AI group '" + $("#ai_grp_name").val() + "' ?";
-        $("#confirmPanel").show();
-        confirmOpen = true;
-    });
-
-    $("#list_grp").click(function() {
-        $.post("https://races/list_grp", JSON.stringify({
-            isPublic: false
-        }));
-    });
-
-    $("#load_grp_pub").click(function() {
-        $.post("https://races/load_grp", JSON.stringify({
-            isPublic: true,
-            name: $("#ai_grp_name_pub").val()
-        }));
-    });
-
-    $("#save_grp_pub").click(function() {
-        $.post("https://races/save_grp", JSON.stringify({
-            isPublic: true,
-            name: $("#ai_grp_name_pub").val()
-        }));
-    });
-
-    $("#overwrite_grp_pub").click(function() {
-        $("#registerPanel").hide();
-        action = select_action("ai_group", "https://races/overwrite_grp", "#ai_grp_name_pub", true);
-        document.getElementById("warning").innerHTML = "Do you really want to overwrite public AI group '" + $("#ai_grp_name_pub").val() + "' ?";
-        $("#confirmPanel").show();
-        confirmOpen = true;
-    });
-
-    $("#delete_grp_pub").click(function() {
-        $("#registerPanel").hide();
-        action = select_action("ai_group", "https://races/delete_grp", "#ai_grp_name_pub", true);
-        document.getElementById("warning").innerHTML = "Do you really want to delete public AI group '" + $("#ai_grp_name_pub").val() + "' ?";
-        $("#confirmPanel").show();
-        confirmOpen = true;
-    });
-
-    $("#list_grp_pub").click(function() {
-        $.post("https://races/list_grp", JSON.stringify({
-            isPublic: true
-        }));
-    });
-
-    $("#register_main").click(function() {
-        $("#registerPanel").hide();
-        $.post("https://races/show", JSON.stringify({
-            panel: "main"
-        }));
-    });
-
-    $("#register_edit").click(function() {
-        $("#registerPanel").hide();
-        $.post("https://races/show", JSON.stringify({
-            panel: "edit"
-        }));
-    });
-
-    $("#register_close").click(function() {
-        $("#registerPanel").hide();
-        $.post("https://races/close");
     });
 
     /* confirm panel */
@@ -583,21 +496,8 @@ $(function() {
             $("#editPanel").show()
         } else if ("register" == openPanel) {
             $("#registerPanel").show();
-        } else if ("main" == openPanel) {
-            $("#mainPanel").show()
-        };
-    });
-
-    /* reply panel */
-    $("#reply_close").click(function() {
-        $("#replyPanel").hide();
-        replyOpen = false;
-        if ("main" == openPanel) {
-            $("#mainPanel").show();
-        } else if ("edit" == openPanel) {
-            $("#editPanel").show();
-        } else if ("register" == openPanel) {
-            $("#registerPanel").show();
+        } else if ("support" == openPanel) {
+            $("#supportPanel").show()
         };
     });
 
@@ -606,25 +506,25 @@ $(function() {
             if (true == replyOpen) {
                 $("#replyPanel").hide();
                 replyOpen = false;
-                if ("main" == openPanel) {
-                    $("#mainPanel").show();
+                if ("register" == openPanel) {
+                    $("#registerPanel").show();
                 } else if ("edit" == openPanel) {
                     $("#editPanel").show();
-                } else if ("register" == openPanel) {
-                    $("#registerPanel").show();
+                } else if ("support" == openPanel) {
+                    $("#supportPanel").show();
                 };
             } else if (true == confirmOpen){
                 $("#confirmPanel").hide();
                 confirmOpen = false;
-                if ("edit" == openPanel) {
-                    $("#editPanel").show();
-                } else if ("register" == openPanel) {
+                if ("register" == openPanel) {
                     $("#registerPanel").show();
-                } else if ("main" == openPanel) {
-                    $("#mainPanel").show();
+                } else if ("edit" == openPanel) {
+                    $("#editPanel").show();
+                } else if ("support" == openPanel) {
+                    $("#supportPanel").show();
                 };
             } else {
-                $("#mainPanel").hide();
+                $("#supportPanel").hide();
                 $("#editPanel").hide();
                 $("#registerPanel").hide();
                 $.post("https://races/close");

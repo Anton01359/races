@@ -11,21 +11,17 @@ Required arguments are in square brackets.  Optional arguments are in parenthese
 **`/race request [role]`** - request permission to have [role] = {edit, register, spawn} role\
 **`/race edit`** - toggle editing track waypoints\
 **`/race clear`** - clear track waypoints\
-**`/race reverse`** - reverse order of track waypoints\
-**`/race load [name]`** - load track saved as [name]\
-**`/race save [name]`** - save new track as [name]\
-**`/race overwrite [name]`** - overwrite existing track saved as [name]\
-**`/race delete [name]`** - delete track saved as [name]\
-**`/race blt [name]`** - list 10 best lap times of track saved as [name]\
-**`/race list`** - list saved tracks\
-**`/race loadPublic [name]`** - load public track saved as [name]\
-**`/race savePublic [name]`** - save new public track as [name]\
-**`/race overwritePublic [name]`** - overwrite existing public track saved as [name]\
-**`/race deletePublic [name]`** - delete public track saved as [name]\
-**`/race bltPublic [name]`** - list 10 best lap times of public track saved as [name]\
-**`/race listPublic`** - list public saved tracks
+**`/race reverse`** - reverse order of track waypoints
 
-For the following **`/race register`** commands, (buy-in) defaults to 0, (laps) defaults to 1 lap, (DNF timeout) defaults to 300 seconds and (allow AI) = {yes, no} defaults to no\
+For the following **`/races`** commands, [access] = {'pvt', 'pub'} where 'pvt' operates on a private track and 'pub' operates on a public track\
+**`/race load [access] [name]`** - load private or public track saved as [name]\
+**`/race save [access] [name]`** - save new private or public track as [name]\
+**`/race overwrite [access] [name]`** - overwrite existing private or public track saved as [name]\
+**`/race delete [access] [name]`** - delete private or public track saved as [name]\
+**`/race blt [access] [name]`** - list 10 best lap times of private or public track saved as [name]\
+**`/race list [access]`** - list saved private or public tracks
+
+For the following **`/race register`** commands, (buy-in) defaults to 0, (laps) defaults to 1 lap, (DNF timeout) defaults to 300 seconds and (allow AI) = {yes, no} defaults to yes\
 **`/race register (buy-in) (laps) (DNF timeout) (allow AI)`** - register your race with no vehicle restrictions\
 **`/race register (buy-in) (laps) (DNF timeout) (allow AI) rest [vehicle]`** - register your race restricted to [vehicle]\
 **`/race register (buy-in) (laps) (DNF timeout) (allow AI) class [class] (filename)`** - register your race restricted to vehicles of type [class]; if [class] is '-1' then use vehicles in (filename) file\
@@ -33,20 +29,17 @@ For the following **`/race register`** commands, (buy-in) defaults to 0, (laps) 
 
 **`/race unregister`** - unregister your race\
 **`/race start (delay)`** - start your registered race; (delay) defaults to 10 seconds\
-**`/race ai add [name]`** - Add an AI driver named [name]\
-**`/race ai delete (name)`** - Delete an AI driver named (name); otherwise delete all AI drivers if (name) is not specified\
-**`/race ai spawn [name] (vehicle)`** - Spawn AI driver named [name] in (vehicle); (vehicle) defaults to 't20'\
-**`/race ai list`** - List AI driver names\
-**`/race ai loadGrp [name]`** - Load AI group saved as [name]\
-**`/race ai saveGrp [name]`** - Save new AI group as [name]\
-**`/race ai overwriteGrp [name]`** - Overwrite existing AI group saved as [name]\
-**`/race ai deleteGrp [name]`** - Delete AI group saved as [name]\
-**`/race ai listGrp`** - List saved AI groups\
-**`/race ai loadGrpPub [name]`** - Load public AI group saved as [name]\
-**`/race ai saveGrpPub [name]`** - Save new public AI group as [name]\
-**`/race ai overwriteGrpPub [name]`** - Overwrite existing public AI group saved as [name]\
-**`/race ai deleteGrpPub [name]`** - Delete public AI group saved as [name]\
-**`/race ai listGrpPub`** - List saved public AI groups\
+**`/race ai spawn [name] (vehicle) (ped)`** - spawn AI driver named [name] in (vehicle) for the (ped); (vehicle) defaults to 't20', (ped) defaults to 'a_f_y_beach_01'\
+**`/race ai delete (name)`** - delete an AI driver named [name]; otherwise delete all AI drivers if (name) is not specified\
+**`/race ai list`** - list AI driver names\
+
+For the following **`/races ai`** commands, [access] = {'pvt', 'pub'} where 'pvt' operates on a private AI group and 'pub' operates on a public AI group\
+**`/race ai loadGrp [access] [name]`** - load private or public AI group saved as [name]\
+**`/race ai saveGrp [access] [name]`** - save new private or public AI group as [name]\
+**`/race ai overwriteGrp [access] [name]`** - overwrite existing private or public AI group saved as [name]\
+**`/race ai deleteGrp [access] [name]`** - delete private or public AI group saved as [name]\
+**`/race ai listGrp [access]`** - list saved private or public AI groups
+
 **`/race leave`** - leave a race that you joined\
 **`/race rivals`** - list competitors in a race that you joined\
 **`/race respawn`** - respawn at last waypoint\
@@ -58,7 +51,7 @@ For the following **`/race register`** commands, (buy-in) defaults to 0, (laps) 
 **`/race dstyle (style number)`** - change the driving style of bots (number from 0 to 2147483647) defaults: 1076625980 https://vespura.com/fivem/drivingstyle/\
 **`/race savep`** - save the tuning of the vehicle in which the player is in memory\
 **`/race loadp`** - replace the current vehicle tuning with tuning from memory\
-**`/race panel (panel)`** - display (panel) = {edit, register} panel; otherwise display main panel if (panel) is not specified
+**`/race panel (panel)`** - display (panel) = {edit, support} panel; otherwise display register panel if (panel) is not specified
 
 **IF YOU DO NOT WANT TO TYPE CHAT COMMANDS, YOU CAN BRING UP A CLICKABLE INTERFACE BY TYPING `'/race panel'`, `'/race panel edit'` OR `'/race panel register'`.**
 
@@ -102,13 +95,13 @@ Required arguments are in square brackets.  Optional arguments are in parenthese
 
 SAMPLE TRACKS
 -------------
-If permission to edit tracks and register races is given or is not required, the sample tracks will be available for you to load.  There are six sample tracks:  '00', '01', '02', '03', '04' and '05' saved in the public tracks list.  You can load sample track '00' by typing **`/race loadPublic 00`**.  To use the loaded track in a race, you need to register the race by typing **`/race register`**.  Go to the registration waypoint of the race indicated by a purple circled star blip on the waypoint map and a purple cylinder checkpoint in the world.  When prompted to join, type 'E' or press right DPAD to join.  Wait for other people to join if you want, then type **`/race start`**.
+If permission to edit tracks and register races is given or is not required, the sample tracks will be available for you to load.  There are six sample tracks:  '00', '01', '02', '03', '04' and '05' saved in the public tracks list.  You can load sample track '00' by typing **`/race load pub 00`**.  To use the loaded track in a race, you need to register the race by typing **`/race register`**.  Go to the registration waypoint of the race indicated by a purple circled star blip on the waypoint map and a purple cylinder checkpoint in the world.  When prompted to join, type 'E' or press right DPAD to join.  Wait for other people to join if you want, then type **`/race start`**.
 
-There are backups of the sample tracks in the **`sampletracks/`** folder with the extension '.json'.  Track '00' is backed up as **`sampletracks/00.json`**.  If any of the sample tracks were deleted from the public list of tracks, you can restore them.  Copy the deleted track from the **`sampletracks/`** folder to the **`resources/races/`** folder.  In the server console, type **`races import 00`** to import track '00' back into the public tracks list.
+There are backups of the sample tracks in the **`custom_tracks/`** folder with the extension '.json'.  Track '00' is backed up as **`custom_tracks/00.json`**.  If any of the sample tracks were deleted from the public list of tracks, you can restore them.  Copy the deleted track from the **`custom_tracks/`** folder to the **`resources/races/`** folder.  In the server console, type **`race import 00`** to import track '00' back into the public tracks list.
 
 QUICK GUIDE FOR RACE CREATORS
 -----------------------------
-If permission to edit tracks and register races is given or is not required, all the following **`/race`** commands are permitted.  Type **`/race edit`** until you see the message **`Editing started`**.  Add at least 2 waypoints on the waypoint map or in the world by pressing 'Enter' on a keyboard, 'A' button on an Xbox controller or 'Cross' button on a DualShock controller.  Type **`/race edit`** again until you see the message **`Editing stopped`**.  Save the track if you want by typing **`/race save mytrack`**.  Register your race by typing **`/race register`**.  At the starting waypoint of the track, a purple circled star blip will appear on the waypoint map and a purple cylinder checkpoint will appear in the world.  This is the registration waypoint which all players will see.  Players who want to join, maybe including yourself, need to have enough funds to pay for the buy-in and move towards the registration waypoint until prompted to join.  Once prompted to join, type 'E' or press right DPAD to join.  Once other people have joined, you can start the race by typing **`/race start`**.
+If permission to edit tracks and register races is given or is not required, all the following **`/race`** commands are permitted.  Type **`/race edit`** until you see the message **`Editing started`**.  Add at least 2 waypoints on the waypoint map or in the world by pressing 'Enter' on a keyboard, 'A' button on an Xbox controller or 'Cross' button on a DualShock controller.  Type **`/race edit`** again until you see the message **`Editing stopped`**.  Save the track if you want by typing **`/race save pvt mytrack`**.  Register your race by typing **`/race register`**.  At the starting waypoint of the track, a purple circled star blip will appear on the waypoint map and a purple cylinder checkpoint will appear in the world.  This is the registration waypoint which all players will see.  Players who want to join, maybe including yourself, need to have enough funds to pay for the buy-in and move towards the registration waypoint until prompted to join.  Once prompted to join, type 'E' or press right DPAD to join.  Once other people have joined, you can start the race by typing **`/race start`**.
 
 QUICK GUIDE FOR RACING
 ----------------------
@@ -116,7 +109,7 @@ There are seven possible types of race you can join:  1. Any vehicle can be used
 
 Look for purple circled star blips on the waypoint map.  There will be corresponding purple cylinder checkpoints in the world.  The label for the blip in the waypoint map will indicate the player who registered the race, the buy-in amount, if AI drivers are allowed and the type of race.
 
-If the race allows AI drivers to be added, the label will include **'AI allowed'**.  The person who registered the race can add as many AI drivers as they like.
+If the race allows AI drivers to be added, the label will include **'AI allowed'**.  The person who registered the race can add as many AI drivers as they like.  Buy-in amounts will be set to 0 and there will be no payouts.
 
 If the race is restricted to a specific vehicle, the label will include **'using [vehicle]'** where [vehicle] is the name of the restricted vehicle.  You must be in that vehicle when prompted to join the race.  If permission to spawn vehicles is given or not required, you can spawn the restricted vehicle by typing **`/race spawn [vehicle]`** where [vehicle] is the restricted vehicle.  For example, if the label shows **using 't20'**, you can spawn the vehicle by typing **`/race spawn t20`**.
 
@@ -140,12 +133,9 @@ If permission is required to edit tracks, the following commands will be restric
 
 **`/race edit`**\
 **`/race reverse`**\
-**`/race save [name]`**\
-**`/race overwrite [name]`**\
-**`/race delete [name]`**\
-**`/race savePublic [name]`**\
-**`/race overwritePublic [name]`**\
-**`/race deletePublic [name]`**
+**`/race save [access] [name]`**\
+**`/race overwrite [access] [name]`**\
+**`/race delete [access] [name]`**
 
 If permission is required to register races, the following commands will be restricted to players who have permission:
 
@@ -159,16 +149,11 @@ If permission is required to register races, the following commands will be rest
 **`/race ai delete (name)`**\
 **`/race ai spawn [name] (vehicle)`**\
 **`/race ai list`**\
-**`/race ai loadGrp [name]`**\
-**`/race ai saveGrp [name]`**\
-**`/race ai overwriteGrp [name]`**\
-**`/race ai deleteGrp [name]`**\
-**`/race ai listGrp`**\
-**`/race ai loadGrpPub [name]`**\
-**`/race ai saveGrpPub [name]`**\
-**`/race ai overwriteGrpPub [name]`**\
-**`/race ai deleteGrpPub [name]`**\
-**`/race ai listGrpPub`**
+**`/race ai loadGrp [access] [name]`**\
+**`/race ai saveGrp [access] [name]`**\
+**`/race ai overwriteGrp [access] [name]`**\
+**`/race ai deleteGrp [access] [name]`**\
+**`/race ai listGrp [access]`**
 
 If permission is required to spawn vehicles, the following command will be restricted to players who have permission:
 
@@ -202,17 +187,17 @@ To reverse the order of waypoints, type **`/race reverse`**.  You can reverse wa
 
 If you are editing waypoints and have not saved them as a track or you have loaded a saved track and modified any of its waypoints, the best lap times will not be saved if you register and start a race using the unsaved or modified track.  A modification to a saved track means adding, deleting, moving, increasing/decreasing radii, combining start/finish, separating start/finish or reversing waypoints.  Changes can only be undone by reloading the saved track.  If you have not saved your waypoints as a track or you loaded a saved track and modified any waypoints, you must save or overwrite the track to allow best lap times to be saved.  **NOTE THAT OVERWRITING A TRACK WILL DELETE ITS EXISTING BEST LAP TIMES.**
 
-After you have set your waypoints, you can save them as a track.  Type **`/race save mytrack`** to save the waypoints as **`mytrack`**.  **`mytrack`** must not exist.  You cannot save unless there are two or more waypoints in the track.  The best lap times for this track will be empty.  If you want to overwrite an existing track named **`mytrack`**, type **`/race overwrite mytrack`**.  **NOTE THAT OVERWRITING A TRACK WILL DELETE ITS EXISTING BEST LAP TIMES.**
+The commands **`/race save`**, **`/race overwrite`**, **`/race list`**, **`/race delete`**, **`/race load`** and **`/race blt`** operate on your private list of tracks if you specify **`pvt`** after the command or on the public list of tracks if you specify **`pub`** after the command.  Only you have access to your private list of tracks and can view and modify them.  All players have access to the public list of tracks and can view and modify them.
 
-To list the tracks you have saved, type **`/race list`**.  If you cannot see all the track names, type 'T' for chat and use the 'Page Up' and 'Page Down' keys to scroll.  Type 'Esc' when done.
+After you have set your waypoints, you can save them as a track.  Type **`/race save pvt mytrack`** to save the waypoints as **`mytrack`**.  **`mytrack`** must not exist.  You cannot save unless there are two or more waypoints in the track.  The best lap times for this track will be empty.  If you want to overwrite an existing track named **`mytrack`**, type **`/race overwrite pvt mytrack`**.  **NOTE THAT OVERWRITING A TRACK WILL DELETE ITS EXISTING BEST LAP TIMES.**
 
-If you want to delete a saved track named **`mytrack`**, type **`/race delete mytrack`**.
+To list the tracks you have saved, type **`/races list pvt`**.  If you cannot see all the track names, type 'T' for chat and use the 'Page Up' and 'Page Down' keys to scroll.  Type 'Esc' when done.
 
-To load the waypoints of a saved track named **`mytrack`**, type **`/race load mytrack`**.  This will clear any current waypoints and load the waypoints from the saved track.  You cannot load a saved track if you have joined a race.  Leave the race or finish it first.
+If you want to delete a saved track named **`mytrack`**, type **`/race delete pvt mytrack`**.
 
-Type **`/race blt mytrack`** to see the 10 best lap times recorded for **`mytrack`**.  Best lap times are recorded after a race has finished if the track was loaded, saved or overwritten without changing any waypoints before the race.  If you cannot see all the best lap times, type 'T' for chat and use the 'Page Up' and 'Page Down' keys to scroll.  Type 'Esc' when done.
+To load the waypoints of a saved track named **`mytrack`**, type **`/race load pvt mytrack`**.  This will clear any current waypoints and load the waypoints from the saved track.  You cannot load a saved track if you have joined a race.  Leave the race or finish it first.
 
-**`save`**, **`overwrite`**, **`list`**, **`delete`**, **`load`** and **`blt`** operate on your private list of tracks.  No one else will be able to view or modify your private list.  **`savePublic`**, **`overwritePublic`**, **`listPublic`**, **`deletePublic`**, **`loadPublic`** and **`bltPublic`** work like the private versions but operate on the public list of tracks.  All players have access to the public list of tracks.
+Type **`/race blt pvt mytrack`** to see the 10 best lap times recorded for **`mytrack`**.  Best lap times are recorded after a race has finished if the track was loaded, saved or overwritten without changing any waypoints before the race.  If you cannot see all the best lap times, type 'T' for chat and use the 'Page Up' and 'Page Down' keys to scroll.  Type 'Esc' when done.
 
 You can clear all waypoints, except registration waypoints, by typing **`/race clear`**.  You cannot clear waypoints if you have joined a race. Leave the race or finish it first.
 
@@ -220,19 +205,19 @@ After you have set your track waypoints, you can register your race using the tr
 
 The registration waypoint on the waypoint map will be labeled with some information about the race.  The player who registered the race, the buy-in amount and if AI drivers are allowed will be shown.  If **'AI allowed'** is shown, AI drivers may be added by the person who registered the race.  If **'using [vehicle]'** is shown, the race is restricted to that vehicle.  If **'using [class] vehicle class'** is shown, the race is restricted to vehicles of type [class].  If **'using random vehicles'** is shown, the race will change vehicles randomly every lap.  If **'using random vehicles : [vehicle]'** is shown, the race will change vehicles randomly every lap and racers will start in the specified [vehicle].  If **'using random [class] vehicle class'** is shown, the race will change vehicles randomly every lap to one from that [class].  If **'using random [class] vehicle class : [vehicle]'** is shown, the race will change vehicles randomly every lap to one from that [class] and start in the specified [vehicle].  This allows racers to determine whether or not they can join the race without having to drive all the way to the registration waypoint.
 
-Type **`/race register 100 2 180 no`** to register your race with a buy-in amount of 100, 2 laps, a DNF timeout of 180 seconds, do not allow AI drivers in the race and no restrictions on the vehicle used.  If you do not indicate the buy-in amount, the default is 500.  If you do not indicate the number of laps, the default is 1 lap.  If you do not indicate the DNF timeout, the default is 120 seconds.  If you do not indicate if AI are allowed, the default is no.
+Type **`/race register 100 2 180 no`** to register your race with a buy-in amount of 100, 2 laps, a DNF timeout of 180 seconds, do not allow AI drivers in the race and no restrictions on the vehicle used.  If you do not indicate the buy-in amount, the default is 0.  If you do not indicate the number of laps, the default is 1 lap.  If you do not indicate the DNF timeout, the default is 300 seconds.  If you do not indicate if AI are allowed, the default is yes.
 
 If you want to restrict the vehicle used in a race, type **`/race register 100 2 180 no rest elegy2`** to restrict vehicles to **`elegy2`**.
 
 If you want to restrict the vehicle class used in a race, type **`/race register 100 2 180 no class 0`** to restrict vehicles to class Compacts (0).
 
-If you want to restrict vehicles to a custom list used in a race, type **`/race register 100 2 180 no class -1 myvehicles.txt`** to restrict vehicles to class Custom (-1) which are listed in a file named **`resources/races/myvehicles.txt`**.  If you specify class Custom (-1), you must provide a file containing the vehicles you allow in the race.  You can add vehicles from **`resources/races/vehicles.txt`** to **`resources/races/myvehicles.txt`**.
+If you want to restrict vehicles to a custom list used in a race, type **`/race register 100 2 180 no class -1 myvehicles.txt`** to restrict vehicles to class Custom (-1) which are listed in a file named **`resources/races/myvehicles.txt`**.  If you specify class Custom (-1), you must provide a file containing the vehicles you allow in the race.  You can add vehicles from **`resources/races/tracks/vehicles/vehicles.txt`** to **`resources/races/myvehicles.txt`**.
 
-If you want a race where vehicles change randomly every lap, type **`/race register 100 2 180 no rand`**.  Buy-in amounts will be set to 0 and there will be no payouts.  The randomly selected vehicles will come from the file **`resources/races/random.txt`**.  You can add vehicles from **`resources/races/vehicles.txt`** to **`resources/races/random.txt`** or remove vehicles from **`resources/races/random.txt`**.
+If you want a race where vehicles change randomly every lap, type **`/race register 100 2 180 no rand`**.  Buy-in amounts will be set to 0 and there will be no payouts.  The randomly selected vehicles will come from the file **`resources/races/tracks/vehicles/random.txt`**.  You can add vehicles from **`resources/races/tracks/vehicles/vehicles.txt`** to **`resources/races/tracks/vehicles/random.txt`** or remove vehicles from **`resources/races/tracks/vehicles/random.txt`**.
 
-If you want a race where vehicles change randomly every lap to one selected from vehicles in **`resources/races/myvehicles.txt`** that you created, type **`/race register 100 2 180 no rand myvehicles.txt`**.  You can add vehicles from **`resources/races/vehicles.txt`** to **`resources/races/myvehicles.txt`**.
+If you want a race where vehicles change randomly every lap to one selected from vehicles in **`resources/races/myvehicles.txt`** that you created, type **`/race register 100 2 180 no rand myvehicles.txt`**.  You can add vehicles from **`resources/races/tracks/vehicles/vehicles.txt`** to **`resources/races/myvehicles.txt`**.
 
-If you want to increase the chances of a specific vehicle appearing, you can enter multiple entries of that vehicle in **`resources/races/random.txt`** or the file that you specified.  Blank lines in the file are ignored.  If there are invalid vehicles in the file, they will be ignored.
+If you want to increase the chances of a specific vehicle appearing, you can enter multiple entries of that vehicle in **`resources/races/tracks/vehicles/random.txt`** or the file that you specified.  Blank lines in the file are ignored.  If there are invalid vehicles in the file, they will be ignored.
 
 If you want a race where vehicles change randomly every lap to one selected from vehicles of class Compacts (0) in **`resources/races/myvehicles.txt`**, type **`/race register 100 2 180 no rand myvehicles.txt 0`**.
 
@@ -269,29 +254,29 @@ The different classes of vehicle you can specify are listed here:
 
 As a convenience, each class of vehicle has been separated into different files in the **`vehicles/`** folder.  Vehicles of class Compacts (0) have been placed in **`00.txt`**.  Vehicles of class Sedans (1) have been placed in **`01.txt`**.  Vehicles of other classes have been placed in similarly named files except for class Custom (-1).  Each of these files contain vehicles taken from **`vehicles.txt`**.  Vehicles that don't seem to be in my version of GTA 5 are in the **`uknown.txt`** file.
 
-If you want a race where AI drivers are allowed, type **`/race register 100 2 180 yes`**.  Only the person who registered the race can add AI drivers.  Buy-in amounts will be set to 0 and there will be no payouts.
+If you want a race where AI drivers aren't allowed, type **`/race register 100 2 180 no`**.  Only the person who registered the race can add AI drivers.  Buy-in amounts will be set to 0 and there will be no payouts.
 
 To add an AI driver named **`adam`** at your current location and heading, type **`/race ai add adam`**.  This only sets the location and heading of the driver.  Move away from the location where you added the driver, then type **`/race ai spawn adam elegy2`** to spawn a driver in an **`elegy2`** vehicle at the location and heading you set.  If you do not specify a vehicle, an **`t20`** vehicle is spawned by default.  A gamer tag with the name of the AI driver will show above the AI so it can be identified.  After you start the race, the gamer tags for all AI drivers will disappear.  To delete an AI driver you added named **`adam`**, type **`/race ai delete adam`**.  You can delete the driver before or after you spawn the driver.  To delete all AI drivers, type **`/race ai delete`**.  To list the names of the AI drivers you added, type **`/race ai list`**.  If you want to ride as a passenger in the AI's vehicle, move close to the vehicle and press 'F' on a keyboard, 'Y' button on an Xbox controller or 'Triangle' button on a DualShock controller.
 
-An AI group is a group of AI drivers that have been added and spawned for a race.  To save an AI group named **`mygroup`**, type **`/race ai saveGrp mygroup`**.  **`mygroup`** must not exist.  You cannot save unless all AI drivers that were added are also spawned.  If you want to overwrite an existing AI group named **`mygroup`**, type **`/race ai overwriteGrp mygroup`**.
+An AI group is a group of AI drivers that have been added and spawned for a race that allows AI drivers.  The commands **`/race ai saveGrp`**, **`/race ai overwriteGrp`**, **`/race ai listGrp`**, **`/race ai deleteGrp`** and **`/race ai loadGrp`** operate on your private list of AI groups if you specify **`pvt`** after the command or on the public list of AI groups if you specify **`pub`** after the command.  Only you have access to your private list of AI groups and can view and modify them.  All players have access to the public list of AI groups and can view and modify them.
 
-To list the AI groups you have saved, type **`/race ai listGrp`**.  If you cannot see all the AI group names, type 'T' for chat and use the 'Page Up' and 'Page Down' keys to scroll.  Type 'Esc' when done.
+To save an AI group named **`mygroup`**, type **`/race ai saveGrp pvt mygroup`**.  **`mygroup`** must not exist.  You cannot save unless all AI drivers that were added are also spawned.  If you want to overwrite an existing AI group named **`mygroup`**, type **`/race ai overwriteGrp pvt mygroup`**.
 
-If you want to delete a saved AI group named **`mygroup`**, type **`/race ai deleteGrp mygroup`**.
+To list the AI groups you have saved, type **`/race ai listGrp pvt`**.  If you cannot see all the AI group names, type 'T' for chat and use the 'Page Up' and 'Page Down' keys to scroll.  Type 'Esc' when done.
 
-To load a saved AI group named **`mygroup`**, type **`/race ai loadGrp mygroup`**.  This will clear any current AI drivers and load the AI drivers from the saved group.  If the race type is restricted to a specific vehicle or a vehicle class, loading will fail if any AI vehicle does not match the specific vehicle or vehicle class.
+If you want to delete a saved AI group named **`mygroup`**, type **`/race ai deleteGrp pvt mygroup`**.
 
-**`saveGrp`**, **`overwriteGrp`**, **`listGrp`**, **`deleteGrp`** and **`loadGrp`** operate on your private list of AI groups.  No one else will be able to view or modify your private list.  **`saveGrpPub`**, **`overwriteGrpPub`**, **`listGrpPub`**, **`deleteGrpPub`** and **`loadGrpPub`** work like the private versions but operate on the public list of AI groups.  All players have access to the public list of AI groups.
+To load a saved AI group named **`mygroup`**, type **`/race ai loadGrp pvt mygroup`**.  This will clear any current AI drivers and load the AI drivers from the saved group.  If the race type is restricted to a specific vehicle or a vehicle class, loading will fail if any AI vehicle does not match the specific vehicle or vehicle class.
 
-AI group data is saved in the file **`resources/races/aiGroupData.json`**.
+AI group data is saved in the file **`resources/races/tracks/data/aiGroupData.json`**.
 
-If you want to use the default value for some arguments of the **`/race register`** command, you can type '.' to use the default value for that argument.  For example, if you type **`/race register . 4 . . rand . 9`** the race will be a random race using the default buy-in amount (500), 4 laps, the default DNF timeout (120 seconds), no AI drivers allowed, the default file of vehicles to randomly select from (**`resources/races/random.txt`**) and vehicles of class Off-road (9).  This is the equivalent of **`/race register 500 4 120 no rand random.txt 9`**.
+If you want to use the default value for some arguments of the **`/race register`** command, you can type '.' to use the default value for that argument.  For example, if you type **`/race register . 4 . . rand . 9`** the race will be a random race using the default buy-in amount (0), 4 laps, the default DNF timeout (300 seconds), 'yes' AI drivers allowed, the default file of vehicles to randomly select from (**`resources/races/tracks/vehicles/random.txt`**) and vehicles of class Off-road (9).  This is the equivalent of **`/race register 500 4 120 no rand random.txt 9`**.
 
 If you set the number of laps to 2 or more, the start and finish waypoints must be the same.  Instructions on how to do this are listed above.  You may only register one race at a time.  If you want to register a new race, but already registered one, you must unregister your current race first. You cannot register a race if you are currently editing waypoints.  Stop editing first.
 
 You can unregister your race by typing **`/race unregister`**.  This will remove your race advertisement from all players.  This can be done before or after you have started the race.  **IF YOU ALREADY STARTED THE RACE AND THEN UNREGISTER IT, THE RACE WILL BE CANCELED.**
 
-To join a race, players will need to be close enough to the registration waypoint to be prompted to join.  The registration waypoint will tell the player if it is an unsaved track or if it is a publicly or privately saved track along with its saved name, who registered the race, how much the buy-in amount is, how many laps there are and the type of race.
+To join a race, players will need to be close enough to the registration waypoint to be prompted to join.  The registration waypoint will tell the player if it is an unsaved track or if it is a publicly or privately saved track along with its saved name, who registered the race, the buy-in amount, the number of laps, if AI drivers are allowed and the type of race.
 
 There are seven possible types of race you can join:  1. Any vehicle can be used, 2. Restricted to a specific vehicle, 3. Restricted to a specific vehicle class, 4. Vehicles change randomly every lap, 5. Vehicles change randomly every lap and racers start in a specified vehicle, 6. Vehicles change randomly every lap to one in a specific class, 7. Vehicles change randomly every lap to one in a specific class and racers start in a specified vehicle.  For race types 4, 5, 6 and 7, buy-in amounts will be set to 0 and there will be no payouts.
 
@@ -307,7 +292,7 @@ To list all competitors in the race that you joined, type **`/race rivals`**.  Y
 
 To respawn at the last waypoint the player has passed in a race type **`/race respawn`**.  You can also press 'X' on a keyboard, 'A' button on an Xbox controller or 'Cross' button on a DualShock controller for one second to respawn.  You can only respawn if you are currently in a race.
 
-Once everyone who wants to join your registered race have joined, you can start the race.  Type **`/race start 10`** to start the race with a delay of 10 seconds before the actual start.  If you do not indicate a delay, the default is 30 seconds.  The minimum delay allowed is 5 seconds.  Any vehicles the players are in will be frozen until after the delay expires.  After the race has started, your race advertisement will be removed from all players.  The position of all human players and AI drivers will show up as green blips on the minimap and waypoint map.
+Once everyone who wants to join your registered race have joined, you can start the race.  Type **`/race start 10`** to start the race with a delay of 10 seconds before the actual start.  If you do not indicate a delay, the default is 10 seconds.  The minimum delay allowed is 5 seconds.  Any vehicles the players are in will be frozen until after the delay expires.  After the race has started, your race advertisement will be removed from all players.  The position of all human players and AI drivers will show up as green blips on the minimap and waypoint map.
 
 The current race waypoint will have a yellow cylinder checkpoint appear in the world.  It will have an arrow indicating the direction of the next waypoint.  If a restricted vehicle or vehicle class was specified at the race registration waypoint, you will need to be in the restricted vehicle or a vehicle of the specified class when passing the waypoint to make the next waypoint appear.  If a restricted vehicle or vehicle class was not specified, you can pass the waypoint in any vehicle or on foot to make the next waypoint appear.  Once you pass the waypoint, it will disappear, a sound will play and the next waypoint will appear in the world.  Only the next three waypoints will be shown on the minimap at a time.  A blue route will be shown in your minimap to the current race waypoint.  Once you pass the current waypoint, it will disappear on the minimap and the next third waypoint along the route will appear on the minimap.  Once you leave or finish the race, all the race waypoints will reappear on the minimap.
 
@@ -319,7 +304,7 @@ After the first racer finishes, there will be a DNF timeout for other racers.  T
 
 As racers finish, their finishing time, best lap time and the vehicle name they used for their best lap time will be broadcast to players who joined the race.  If a racer DNF's, this will also be broadcast.
 
-After all racers finish or DNF, the race results will be broadcast to players who joined the race.  Their position, name, finishing time, best lap time and name of the vehicle used for their best lap time will be displayed.  Best lap times will be recorded if the track was a saved track and waypoints were not modified.  Race results are saved to **`resources/races/results_[owner].txt`** where [owner] is the owner of the race.
+After all racers finish or DNF, the race results will be broadcast to players who joined the race.  Their position, name, finishing time, best lap time and name of the vehicle used for their best lap time will be displayed.  Best lap times will be recorded if the track was a saved track and waypoints were not modified.  Race results are saved to **`resources/races/tracks/results/results_[owner].txt`** where [owner] is the owner of the race.
 
 Racers are given prize money after all racers finish or DNF.  At the start of every game session, players start with at least 5000 in their funds.  If you are using the existing **`port.lua`** file, race earnings are not saved between different game sessions.  If you win prize money in one game session, it will not carry over to the next game session.  **`port.lua`** may be ported to a framework that does save funds between different game sessions.  The ESX framework may save race earnings from one game session to the next game session.  A port of the **`port.lua`** file to ESX is in the **`esx/`** folder.  Total race prize money is the sum of all buy-in amounts that all racers paid.  The prize distribution is as follows: 1st 60%, 2nd 20%, 3rd 10%, 4th 5%, 5th 3% and lastly, 2% is spread evenly among racers who finished 6th and later.  Racers who DNF will not receive a payout unless all racers DNF.  If all racers DNF, all racers are refunded their buy-in amounts.  If fewer racers finish the race than there are places in the prize distribution, all racers who finished will receive any left over place percentages split evenly among the finishers.  If you wish to distribute the prize money differently, you will need to modify the values of the table named **`dist`** in **`races_server.lua`**.  The declaration and initialization of **`dist`** is **`local dist <const> = {60, 20, 10, 5, 3, 2}`**.  You can change the total number of values in the table.  For the distribution to be valid, the following conditions must be met:  All values in the table **`dist`** must add up to 100.  All values in the table must be 1 or greater.  First place distribution must be greater than or equal to second place distribution.  Second place distribution must be greater than or equal to 3rd place distribution and so on.  If these conditions are not met, a message will be displayed in the server console in red saying that the distribution is invalid.  If the distribution is invalid, players can still race.  Their buy-in amounts will be refunded after all racers finish or DNF.
 **`local dist <const> = {60, 20, 10, 5, 3, 2}`**\
@@ -331,13 +316,13 @@ To spawn a vehicle, type **`/race spawn elegy2`** to spawn an **`elegy2`** vehic
 
 To list vehicles that can be used for any race, type **`/race lvehicles`**.  To list vehicles of a specific class, type **`/race lvehicles 0`** to list class Compacts (0) vehicles.  The vehicles displayed come from the **`vehicles.txt`** file which should contain every vehicle.
 
-To toggle the display of the speedometer at any time, type **`/race speedo`**.  The speedometer automatically displays when you are in a race and disappears when you finish or leave the race.  The default unit of measurement is imperial.  If you wish to change the unit of measurement type **`/race speedo (unit)`** where (unit) is either **`imperial`** for imperial or **`metric`** for metric.
+To toggle the display of the speedometer at any time, type **`/race speedo`**.  The speedometer automatically displays when you are in a race and disappears when you finish or leave the race.  The default unit of measurement is metrics.  If you wish to change the unit of measurement type **`/race speedo (unit)`** where (unit) is either **`imperial`** for imperial or **`metric`** for metric.
 
 To view your available funds for race buy-ins, type **`/race funds`**.
 
-Type **`/race panel`** to show the main panel.  Type **`/race panel edit`** to show the edit tracks panel.  Type **`/race panel register`** to show the register races panel.  All **`/race`** commands have a corresponding button and argument field(s) if needed.  Replies to the commands will show up in another panel as well as in chat.  To close the panel, type 'Escape' or click the 'Close' button at the bottom.
+Type **`/races panel`** to show the register panel.  Type **`/races panel edit`** to show the edit tracks panel.  Type **`/races panel support`** to show the support panel.  All **`/race`** commands have a corresponding button and argument field(s) if needed.  Replies to the commands will show up in another panel as well as in chat.  There are buttons near the bottom that will let you switch to another panel if you click them.  To close the panel, type 'Escape' or click the 'Close' button at the bottom.
 
-Leaving a race or finishing it does not clear its track waypoints.  If you like the track, you can save it to your private list by typing **`/race save nicetrack`**.
+Leaving a race or finishing it does not clear its track waypoints.  If you like the track, you can save it to your private list by typing **`/race save pvt nicetrack`**.
 
 Multiple races can be registered and started simultaneously by different players.
 
@@ -347,13 +332,13 @@ Server commands are typed into the server console.
 
 Type **`races`** to see the list of available **`races`** commands.
 
-Type **`races export publictrack`** to export the public track saved as **`publictrack`** without best lap times to the file **`resources/races/publictrack.json`**.  You cannot export the track if **`resources/races/publictrack.json`** already exists.  You will need to remove or rename the existing file and then export again.
+Type **`races export publictrack`** to export the public track saved as **`publictrack`** without best lap times to the file **`resources/races/tracks/custom_tracks/publictrack.json`**.  You cannot export the track if **`resources/races/tracks/custom_tracks/publictrack.json`** already exists.  You will need to remove or rename the existing file and then export again.
 
-Type **`races import mytrack`** to import the track file named **`resources/races/mytrack.json`** into the public tracks list without best lap times.  You cannot import **`mytrack`** if it already exists in the public tracks list.  You will need to rename the file and then import with the new name.
+Type **`races import mytrack`** to import the track file named **`resources/races/tracks/custom_tracks/mytrack.json`** into the public tracks list without best lap times.  You cannot import **`mytrack`** if it already exists in the public tracks list.  You will need to rename the file and then import with the new name.
 
-Type **`races exportwblt publictrack`** to export the public track saved as **`publictrack`** with best lap times to the file **`resources/races/publictrack.json`**.  You cannot export the track if **`resources/races/publictrack.json`** already exists.  You will need to remove or rename the existing file and then export again.
+Type **`races exportwblt publictrack`** to export the public track saved as **`publictrack`** with best lap times to the file **`resources/races/tracks/custom_tracks/publictrack.json`**.  You cannot export the track if **`resources/races/tracks/custom_tracks/publictrack.json`** already exists.  You will need to remove or rename the existing file and then export again.
 
-Type **`races importwblt mytrack`** to import the track file named **`resources/races/mytrack.json`** into the public tracks list with best lap times.  You cannot import **`mytrack`** if it already exists in the public tracks list.  You will need to rename the file and then import with the new name.
+Type **`races importwblt mytrack`** to import the track file named **`resources/races/tracks/custom_tracks/mytrack.json`** into the public tracks list with best lap times.  You cannot import **`mytrack`** if it already exists in the public tracks list.  You will need to rename the file and then import with the new name.
 
 **If permission is required to edit tracks, register races and spawn vehicles, the following commands administer these permissions:**
 
@@ -367,13 +352,13 @@ Type **`races listRoles`** to list if permission is required to edit tracks, reg
 
 Type **`races removeRole [name] (role)`** to remove player [name]'s (role) which can be **`edit`**, **`register`** or **`spawn`**.  If (role) is not specified, remove all roles.
 
-Roles are saved in the file **`resources/races/rolesData.json`**.
+Roles are saved in the file **`resources/races/tracks/data/rolesData.json`**.
 
 **IF YOU WANT TO PRESERVE TRACKS FROM A PREVIOUS VERSION OF THESE SCRIPTS, YOU SHOULD UPDATE `raceData.json` AND ANY EXPORTED TRACKS BY EXECUTING THE FOLLOWING COMMANDS BEFORE CLIENTS CONNECT TO THE SERVER TO USE THE NEW TRACK DATA FORMAT WHICH INCLUDES WAYPOINT RADIUS SIZES.**
 
-Type **`races updateRaceData`** to update **`resources/races/raceData.json`** to the new file **`resources/races/raceData_updated.json`**.  You will need to remove the old **`raceData.json`** file and then rename **`raceData_updated.json`** to **`raceData.json`** to use the new race data format.
+Type **`races updateRaceData`** to update **`resources/races/tracks/data/raceData.json`** to the new file **`resources/races/tracks/data/raceData_updated.json`**.  You will need to remove the old **`raceData.json`** file and then rename **`raceData_updated.json`** to **`raceData.json`** to use the new race data format.
 
-Type **`races updateTrack mytrack`** to update the exported track **`resources/races/mytrack.json`** to the new file **`resources/races/mytrack_updated.json`**.  You will need to remove the old **`mytrack.json`** file and then rename **`mytrack_updated.json`** to **`mytrack.json`** to use the new track data format.  You will then be able to import the track using the new track data format.
+Type **`races updateTrack mytrack`** to update the exported track **`resources/races/tracks/custom_tracks/mytrack.json`** to the new file **`resources/races/tracks/custom_tracks/mytrack_updated.json`**.  You will need to remove the old **`mytrack.json`** file and then rename **`mytrack_updated.json`** to **`mytrack.json`** to use the new track data format.  You will then be able to import the track using the new track data format.
 
 EVENT LOGGING
 -------------
@@ -402,78 +387,3 @@ PORTING
 If you wish to port these scripts to a specific framework, such as ESX, you will need to modify the contents of the funds functions **`GetFunds`**, **`SetFunds`**, **`Withdraw`**, **`Deposit`** and **`Remove`** in **`port.lua`** to work for your framework.
 
 An attempt to port the funds functions to ESX is available in the **`esx/`** folder.  Copy **`esx/port.lua`** to your server's **`resources/races/`** folder replacing the existing **`port.lua`** file.
-
-SCREENSHOTS
------------
-Registration point\
-<img src="screenshots/Screenshot%20(1).png" width="800">
-
-Before race start\
-<img src="screenshots/Screenshot%20(2).png" width="800">
-
-In race\
-<img src="screenshots/Screenshot%20(3).png" width="800">
-
-In race\
-<img src="screenshots/Screenshot%20(4).png" width="800">
-
-Near finish\
-<img src="screenshots/Screenshot%20(5).png" width="800">
-
-Race results\
-<img src="screenshots/Screenshot%20(6).png" width="800">
-
-Editing waypoints in waypoint map\
-<img src="screenshots/Screenshot%20(7).png" width="800">
-
-Editing waypoints in world\
-<img src="screenshots/Screenshot%20(8).png" width="800">
-
-Main command button panel\
-<img src="screenshots/Screenshot%20(9).png" width="800">
-
-Edit tracks command button panel\
-<img src="screenshots/Screenshot%20(10).png" width="800">
-
-Register races command button panel\
-<img src="screenshots/Screenshot%20(11).png" width="800">
-
-VIDEOS
-------
-[Point-to-point race](https://www.youtube.com/watch?v=K8pEdsXJRtc)
-
-[Multi-lap race](https://www.youtube.com/watch?v=TKibGh_11FA)
-
-[Multi-lap random vehicle race](https://www.youtube.com/watch?v=Cwtz6t8Q82E)
-
-[Multi-lap race with AI drivers](https://www.youtube.com/watch?v=ADkaNMvSFeM)
-
-LICENSE
--------
-Copyright (c) 2022, Neil J. Tan
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-1. Redistributions of source code must retain the above copyright notice, this
-   list of conditions and the following disclaimer.
-
-2. Redistributions in binary form must reproduce the above copyright notice,
-   this list of conditions and the following disclaimer in the documentation
-   and/or other materials provided with the distribution.
-
-3. Neither the name of the copyright holder nor the names of its
-   contributors may be used to endorse or promote products derived from
-   this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

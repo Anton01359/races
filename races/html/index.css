@@ -43,222 +43,10 @@ body {
     align-items: center;
 }
 
-#mainPanel {
-    text-align: center;
-    font-size: 25px;
-    padding: 25px;
-    color: rgb(0, 255, 0);
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    border: 3px solid rgb(0, 0, 255);
-    border-radius: 50px;
-}
-
-#request {
-    width: 25%;
-}
-
-#role {
-    height: 45px;
-}
-
-#main_clear {
-    width: 25%;
-}
-
-#main_name {
-    width: 80%;
-}
-
-#main_load {
-    width: 25%
-}
-
-#main_blt {
-    width: 25%;
-}
-
-#main_list {
-    width: 25%;
-}
-
-#main_name_pub {
-    width: 80%;
-}
-
-#main_load_pub {
-    width: 25%
-}
-
-#main_blt_pub {
-    width: 25%;
-}
-
-#main_list_pub {
-    width: 25%;
-}
-
-#leave {
-    width: 20%;
-}
-
-#rivals {
-    width: 20%;
-}
-
-#respawn {
-    width: 20%;
-}
-
-#results {
-    width: 20%;
-}
-
-#spawn {
-    width: 25%;
-}
-
-#vehicle {
-    width: 25%;
-}
-
-#lvehicles {
-    width: 25%;
-}
-
-#main_vclass {
-    height: 45px;
-}
-
-#speedo {
-    width: 25%;
-}
-
-#change {
-    width: 25%;
-}
-
-#unit {
-    height: 45px;
-}
-
-#funds {
-    width: 25%;
-}
-
-#savep {
-    width: 25%;
-}
-
-#loadp {
-    width: 25%;
-}
-
-#change_dstyle {
-    width: 25%;
-}
-
-#dstyle {
-    width: 25%;
-}
-
-#main_edit {
-    width: 25%;
-}
-
-#main_register {
-    width: 25%;
-}
-
-#main_close {
-    width: 25%;
-    height: 45px;
-}
-
-#editPanel {
-    text-align: center;
-    font-size: 25px;
-    padding: 25px;
-    color: rgb(0, 255, 0);
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    border: 3px solid rgb(0, 0, 255);
-    border-radius: 50px;
-}
-
-#edit {
-    width: 25%;
-}
-
-#edit_clear {
-    width: 25%;
-}
-
-#edit_reverse {
-    width: 25%;
-}
-
-#edit_name {
-    width: 80%;
-}
-
-/*
-#edit_load {
-}
-#edit_save {
-}
-#edit_overwrite {
-}
-#edit_delete {
-}
-#edit_blt {
-}
-#edit_list {
-}
-*/
-
-#edit_name_pub {
-    width: 80%;
-}
-
-/*
-#edit_load_pub {
-}
-#edit_save_pub {
-}
-#edit_overwrite_pub {
-}
-#edit_delete_pub {
-}
-#edit_blt_pub {
-}
-#edit_list_pub {
-}
-*/
-
-#edit_main {
-    width: 25%;
-}
-
-#edit_register {
-    width: 25%;
-}
-
-#edit_close {
-    width: 25%;
-    height: 45px;
-}
-
 #registerPanel {
     text-align: center;
     font-size: 25px;
-    padding: 10px;
+    padding: 20px;
     color: rgb(0, 255, 0);
     position: fixed;
     top: 50%;
@@ -267,10 +55,15 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
     border: 3px solid rgb(0, 0, 255);
     border-radius: 50px;
+}
+
+#register_track_access {
+    height: 45px;
 }
 
 #register_name {
     width: 80%;
+    width: 500px;
 }
 
 #register_load {
@@ -282,22 +75,6 @@ body {
 }
 
 #register_list {
-    width: 25%;
-}
-
-#register_name_pub {
-    width: 80%;
-}
-
-#register_load_pub {
-    width: 25%;
-}
-
-#register_blt_pub {
-    width: 25%;
-}
-
-#register_list_pub {
     width: 25%;
 }
 
@@ -334,6 +111,10 @@ body {
     height: 45px;
 }
 
+#register_rclass {
+    height: 45px;
+}
+
 #register {
     width: 25%;
     height: 45px;
@@ -365,28 +146,24 @@ body {
     width: 25%;
 }
 
-#add_ai {
-    width: 10%;
-}
-
 #spawn_ai {
-    width: 10%;
+    width: 25%;
 }
 
 #delete_ai {
-    width: 10%;
-}
-
-#delete_all_ai {
-    width: 10%;
+    width: 25%;
 }
 
 #list_ai {
-    width: 10%;
+    width: 25%;
 }
 
-#ai_grp_name {
-    width: 25%;
+#grp_access {
+    height: 44px;
+}
+
+#grp_name {
+    width: 500px;
 }
 
 #load_grp {
@@ -409,31 +186,7 @@ body {
     width: 10%;
 }
 
-#ai_grp_name_pub {
-    width: 25%;
-}
-
-#load_grp_pub {
-    width: 10%;
-}
-
-#save_grp_pub {
-    width: 10%;
-}
-
-#overwrite_grp_pub {
-    width: 10%;
-}
-
-#delete_grp_pub {
-    width: 10%;
-}
-
-#list_grp_pub {
-    width: 10%;
-}
-
-#register_main {
+#register_support {
     width: 25%;
 }
 
@@ -442,6 +195,193 @@ body {
 }
 
 #register_close {
+    width: 25%;
+    height: 45px;
+}
+
+#editPanel {
+    text-align: center;
+    font-size: 25px;
+    padding: 25px;
+    color: rgb(0, 255, 0);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 3px solid rgb(0, 0, 255);
+    border-radius: 50px;
+}
+
+#edit {
+    width: 25%;
+}
+
+#edit_clear {
+    width: 25%;
+}
+
+#edit_reverse {
+    width: 25%;
+}
+
+#edit_track_access {
+    height: 45px;
+}
+
+#edit_name {
+    width: 80%;
+    width: 500px;
+}
+
+/*
+#edit_load {
+}
+#edit_save {
+}
+#edit_overwrite {
+}
+#edit_delete {
+}
+#edit_blt {
+}
+#edit_list {
+}
+*/
+
+#edit_support {
+    width: 25%;
+}
+
+#edit_register {
+    width: 25%;
+}
+
+#edit_close {
+    width: 25%;
+    height: 45px;
+}
+
+#supportPanel {
+    text-align: center;
+    font-size: 25px;
+    padding: 25px;
+    color: rgb(0, 255, 0);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 3px solid rgb(0, 0, 255);
+    border-radius: 50px;
+}
+
+#request {
+    width: 25%;
+}
+
+#role {
+    height: 45px;
+}
+
+#support_clear {
+    width: 25%;
+}
+
+#support_track_access {
+    height: 45px;
+}
+
+#support_name {
+    width: 80%;
+    width: 500px;
+}
+
+#support_load {
+    width: 25%
+}
+
+#support_blt {
+    width: 25%;
+}
+
+#support_list {
+    width: 25%;
+}
+
+#leave {
+    width: 20%;
+}
+
+#rivals {
+    width: 20%;
+}
+
+#respawn {
+    width: 20%;
+}
+
+#results {
+    width: 20%;
+}
+
+#spawn {
+    width: 25%;
+}
+
+#vehicle {
+    width: 25%;
+}
+
+#lvehicles {
+    width: 25%;
+}
+
+#support_vclass {
+    height: 45px;
+}
+
+#speedo {
+    width: 25%;
+}
+
+#change {
+    width: 25%;
+}
+
+#unit {
+    height: 45px;
+}
+
+#funds {
+    width: 25%;
+}
+
+#savep {
+    width: 25%;
+}
+
+#loadp {
+    width: 25%;
+}
+
+#change_dstyle {
+    width: 25%;
+}
+
+#dstyle {
+    width: 25%;
+}
+
+#support_edit {
+    width: 25%;
+}
+
+#support_register {
+    width: 25%;
+}
+
+#support_close {
     width: 25%;
     height: 45px;
 }
