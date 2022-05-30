@@ -147,7 +147,7 @@ If permission is required to register races, the following commands will be rest
 **`/race start (delay)`**\
 **`/race ai add [name]`**\
 **`/race ai delete (name)`**\
-**`/race ai spawn [name] (vehicle)`**\
+**`/race ai spawn [name] (vehicle) (ped)`**\
 **`/race ai list`**\
 **`/race ai loadGrp [access] [name]`**\
 **`/race ai saveGrp [access] [name]`**\
