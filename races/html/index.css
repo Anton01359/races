@@ -62,8 +62,8 @@ body {
 }
 
 #register_name {
-    width: 80%;
     width: 500px;
+    height: 45px;
 }
 
 #register_load {
@@ -91,7 +91,7 @@ body {
 }
 
 #allowAI {
-    height: 44px;
+    height: 45px;
 }
 
 #rtype {
@@ -158,19 +158,16 @@ body {
     width: 25%;
 }
 
-#grp_access {
-    height: 44px;
+#grp_access0 {
+    height: 45px;
 }
 
 #grp_name {
     width: 500px;
+    height: 45px;
 }
 
 #load_grp {
-    width: 10%;
-}
-
-#save_grp {
     width: 10%;
 }
 
@@ -183,6 +180,19 @@ body {
 }
 
 #list_grp {
+    width: 10%;
+}
+
+#grp_access1 {
+    height: 45px;
+}
+
+#grp_unsaved {
+    width: 500px;
+    height: 45px;
+}
+
+#save_grp {
     width: 10%;
 }
 
@@ -225,19 +235,17 @@ body {
     width: 25%;
 }
 
-#edit_track_access {
+#edit_track_access0 {
     height: 45px;
 }
 
 #edit_name {
-    width: 80%;
     width: 500px;
+    height: 45px;
 }
 
 /*
 #edit_load {
-}
-#edit_save {
 }
 #edit_overwrite {
 }
@@ -248,6 +256,19 @@ body {
 #edit_list {
 }
 */
+
+#edit_track_access1 {
+    height: 45px;
+}
+
+#edit_unsaved {
+    width: 500px;
+    height: 45px;
+}
+
+#edit_save {
+    width: 15%;
+}
 
 #edit_support {
     width: 25%;
@@ -293,8 +314,8 @@ body {
 }
 
 #support_name {
-    width: 80%;
     width: 500px;
+    height: 45px;
 }
 
 #support_load {

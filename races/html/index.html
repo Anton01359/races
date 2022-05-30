@@ -43,7 +43,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     <option value = "pvt">Private</option>
                     <option value = "pub">Public</option>
                 </select>
-                Track Name:<input id = "register_name" placeholder = "Track name">
+                <label for = "register_name">Track Name:</label>
+                <select id = "register_name">
+                </select>
             </div>
             <div class = "row">
                 <button id = "register_load">Load</button>
@@ -70,10 +72,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             </div>
             <div class = "row">
                 <div id = "rest">
-                    Restrict:<input id = "restrict" placeholder = "Vehicle">
+                    Restrict:<input id = "restrict" placeholder = "Vehicle Name">
                 </div>
                 <div id = "file">
-                    Vehicle File:<input id = "filename" placeholder = "File name">
+                    Vehicle File:<input id = "filename" placeholder = "File Name">
                 </div>
                 <div id = "vclass">
                     <label for = "register_vclass">Vehicle Class:</label>
@@ -135,7 +137,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     </select>
                 </div>
                 <div id = "sveh">
-                    Start Vehicle:<input id = "svehicle" placeholder = "Vehicle">
+                    Start Vehicle:<input id = "svehicle" placeholder = "Vehicle Name">
                 </div>
             </div>
             <br>
@@ -150,9 +152,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             </div>
             <br>
             <div class = "row">
-                AI Name:<input id = "ai_name" placeholder = "AI name">
-                Vehicle:<input id = "ai_vehicle" placeholder = "Vehicle name">
-                Model:<input id = "ai_ped" placeholder = "Ped name">
+                AI Name:<input id = "ai_name" placeholder = "AI Name">
+                Vehicle Name:<input id = "ai_vehicle" placeholder = "Vehicle Name">
+                Model Name:<input id = "ai_ped" placeholder = "Ped Name">
             </div>
             <div class = "row">
                 <button id = "spawn_ai">Spawn AI</button>
@@ -161,18 +163,30 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             </div>
             <br>
             <div class = "row">
-                <select id = "grp_access">
+                <select id = "grp_access0">
                     <option value = "pvt">Private</option>
                     <option value = "pub">Public</option>
                 </select>
-                AI Group Name:<input id = "grp_name" placeholder = "AI group name">
+                <label for = "grp_name">AI Group Name:</label>
+                <select id = "grp_name">
+                </select>
             </div>
             <div class = "row">
                 <button id = "load_grp">Load AI Group</button>
-                <button id = "save_grp">Save AI Group</button>
                 <button id = "overwrite_grp">Overwrite AI Group</button>
                 <button id = "delete_grp">Delete AI Group</button>
                 <button id = "list_grp">List AI Groups</button>
+            </div>
+            <br>
+            <div class = "row">
+                <select id = "grp_access1">
+                    <option value = "pvt">Private</option>
+                    <option value = "pub">Public</option>
+                </select>
+                AI Group Name:<input id = "grp_unsaved" placeholder = "Unsaved AI Group Name">
+            </div>
+            <div class = "row">
+                <button id = "save_grp">Save AI Group</button>
             </div>
             <br>
             <div class = "row">
@@ -193,19 +207,31 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             </div>
             <br>
             <div class = "row">
-                <select id = "edit_track_access">
+                <select id = "edit_track_access0">
                     <option value = "pvt">Private</option>
                     <option value = "pub">Public</option>
                 </select>
-                Track Name:<input id = "edit_name" placeholder = "Track name">
+                <label for = "edit_name">Track Name:</label>
+                <select id = "edit_name">
+                </select>
             </div>
             <div class = "row">
                 <button id = "edit_load">Load</button>
-                <button id = "edit_save">Save</button>
                 <button id = "edit_overwrite">Overwrite</button>
                 <button id = "edit_delete">Delete</button>
                 <button id = "edit_blt">Best Laps</button>
                 <button id = "edit_list">List</button>
+            </div>
+            <br>
+            <div class = "row">
+                <select id = "edit_track_access1">
+                    <option value = "pvt">Private</option>
+                    <option value = "pub">Public</option>
+                </select>
+                Track Name:<input id = "edit_unsaved" placeholder = "Unsaved Track Name">
+            </div>
+            <div class = "row">
+                <button id = "edit_save">Save</button>
             </div>
             <br>
             <div class = "row">
@@ -238,7 +264,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     <option value = "pvt">Private</option>
                     <option value = "pub">Public</option>
                 </select>
-                Track Name:<input id = "support_name" placeholder = "Track name">
+                <label for = "support_name">Track Name:</label>
+                <select id = "support_name">
+                </select>
             </div>
             <div class = "row">
                 <button id = "support_load">Load</button>
@@ -255,7 +283,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <br>
             <div class = "row">
                 <button id = "spawn">Spawn Vehicle</button>
-                Vehicle:<input id = "vehicle" placeholder = "Vehicle name">
+                Vehicle Name:<input id = "vehicle" placeholder = "Vehicle name">
             </div>
             <br>
             <div class = "row">

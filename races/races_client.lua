@@ -2015,6 +2015,10 @@ local function showPanel(panel)
     panelShown = true
     if nil == panel or "register" == panel then
         SetNuiFocus(true, true)
+        TriggerServerEvent("races:trackNames", false)
+        TriggerServerEvent("races:trackNames", true)
+        TriggerServerEvent("races:aiGrpNames", false)
+        TriggerServerEvent("races:aiGrpNames", true)
         SendNUIMessage({
             panel = "register",
             defaultBuyin = defaultBuyin,
@@ -2025,11 +2029,15 @@ local function showPanel(panel)
         })
     elseif "edit" == panel then
         SetNuiFocus(true, true)
+        TriggerServerEvent("races:trackNames", false)
+        TriggerServerEvent("races:trackNames", true)
         SendNUIMessage({
             panel = "edit"
         })
     elseif "support" == panel then
         SetNuiFocus(true, true)
+        TriggerServerEvent("races:trackNames", false)
+        TriggerServerEvent("races:trackNames", true)
         SendNUIMessage({
             panel = "support"
         })
@@ -2170,7 +2178,17 @@ RegisterNUICallback("spawn_ai", function(data)
     if "" == ped then
         ped = nil
     end
-    spawnAIDriver(aiName, GetHashKey(vehicle), GetHashKey(ped), GetEntityCoords(player), GetEntityHeading(player))
+    if vehicle == nil or ped == nil then
+        if vehicle == nil and ped == nil then
+            spawnAIDriver(aiName, nil, nil, GetEntityCoords(player), GetEntityHeading(player))
+        else if vehicle ~= nil and ped == nil then
+            spawnAIDriver(aiName, GetHashKey(vehicle), nil), GetEntityCoords(player), GetEntityHeading(player))
+        else
+            spawnAIDriver(aiName, nil, GetHashKey(ped), GetEntityCoords(player), GetEntityHeading(player))
+        end
+    else
+        spawnAIDriver(aiName, GetHashKey(vehicle), GetHashKey(ped), GetEntityCoords(player), GetEntityHeading(player))
+    end
 end)
 
 RegisterNUICallback("delete_ai", function(data)
@@ -2470,7 +2488,17 @@ RegisterCommand("race", function(_, args)
     elseif "ai" == args[1] then
         if "spawn" == args[2] then
             local player = PlayerPedId()
-            spawnAIDriver(args[3], GetHashKey(args[4]), GetHashKey(args[5]), GetEntityCoords(player), GetEntityHeading(player))
+            if args[4] == nil or args[5] == nil then
+                if args[4] == nil and args[5] == nil then
+                    spawnAIDriver(args[3], nil, nil, GetEntityCoords(player), GetEntityHeading(player))
+                else if args[4] ~= nil and args[5] == nil then
+                    spawnAIDriver(args[3], GetHashKey(args[4]), nil, GetEntityCoords(player), GetEntityHeading(player))
+                else
+                    spawnAIDriver(args[3], nil, GetHashKey(args[5]), GetEntityCoords(player), GetEntityHeading(player))
+                end
+            else
+                spawnAIDriver(args[3], GetHashKey(args[4]), GetHashKey(args[5]), GetEntityCoords(player), GetEntityHeading(player))
+            end
         elseif "delete" == args[2] then
             deleteAIDriver(args[3])
         elseif "list" == args[2] then
@@ -2578,6 +2606,9 @@ AddEventHandler("races:save", function(isPublic, trackName)
     if isPublic ~= nil and trackName ~= nil then
         isPublicTrack = isPublic
         savedTrackName = trackName
+        if true == panelShown then
+            TriggerServerEvent("races:trackNames", isPublic)
+        end
         sendMessage("Saved " .. (true == isPublic and "public" or "private") .. " track '" .. trackName .. "'.\n")
     else
         notifyPlayer("Ignoring save event.  Invalid parameters.\n")
@@ -2592,6 +2623,13 @@ AddEventHandler("races:overwrite", function(isPublic, trackName)
         sendMessage("Overwrote " .. (true == isPublic and "public" or "private") .. " track '" .. trackName .. "'.\n")
     else
         notifyPlayer("Ignoring overwrite event.  Invalid parameters.\n")
+    end
+end)
+
+RegisterNetEvent("races:delete")
+AddEventHandler("races:delete", function(isPublic)
+    if true == panelShown then
+        TriggerServerEvent("races:trackNames", isPublic)
     end
 end)
 
@@ -2756,6 +2794,13 @@ AddEventHandler("races:loadGrp", function(isPublic, name, group)
         end
     else
         notifyPlayer("Ignoring load AI group event.  Invalid parameters.\n")
+    end
+end)
+
+RegisterNetEvent("races:updateGrp")
+AddEventHandler("races:updateGrp", function(isPublic)
+    if true == panelShown then
+        TriggerServerEvent("races:aiGrpNames", isPublic)
     end
 end)
 
@@ -3036,7 +3081,7 @@ end)
 -- do not accept results event from previous race
 RegisterNetEvent("races:results")
 AddEventHandler("races:results", function(rIndex, raceResults)
-    if raceResults ~= nil then
+    if rIndex ~= nil and raceResults ~= nil then
         if rIndex == raceIndex then
             results = raceResults
             viewResults(true)
