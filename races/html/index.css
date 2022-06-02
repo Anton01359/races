@@ -111,10 +111,6 @@ body {
     height: 45px;
 }
 
-#register_rclass {
-    height: 45px;
-}
-
 #register {
     width: 25%;
     height: 45px;
@@ -244,18 +240,25 @@ body {
     height: 45px;
 }
 
-/*
 #edit_load {
+    width: 15%;
 }
+
 #edit_overwrite {
+    width: 15%;
 }
+
 #edit_delete {
+    width: 15%;
 }
+
 #edit_blt {
+    width: 15%;
 }
+
 #edit_list {
+    width: 15%;
 }
-*/
 
 #edit_track_access1 {
     height: 45px;

@@ -38,8 +38,8 @@ $(function() {
     let pubTrackNames = "";
     let pvtGrpNames = "";
     let pubGrpNames = "";
-    var action
-    var access
+    let action
+    let access
 
     function select_action(object, action, name) {
         if (object == "track") {
@@ -146,19 +146,44 @@ $(function() {
     });
 
     $("#rtype").change(function() {
+        let html = 
+            "<option value = 0>Super</option>" +
+            "<option value = 1>Sports</option>" +
+            "<option value = 2>Sports Classics</option>" +
+            "<option value = 3>Muscle</option>" +
+            "<option value = 4>Sedans</option>" +
+            "<option value = 5>Coupes</option>" +
+            "<option value = 6>Compacts</option>" +
+            "<option value = 7>SUVs</option>" +
+            "<option value = 8>Off-road</option>" +
+            "<option value = 9>Motorcycles</option>" +
+            "<option value = 10>Cycles</option>" +
+            "<option value = 11>Open Wheel</option>" +
+            "<option value = 12>Vans</option>" +
+            "<option value = 13>Emergency</option>" +
+            "<option value = 14>Service</option>" +
+            "<option value = 15>Commercial</option>" +
+            "<option value = 16>Industrial</option>" +
+            "<option value = 17>Military</option>" +
+            "<option value = 18>Planes</option>" +
+            "<option value = 19>Helicopters</option>" +
+            "<option value = 20>Boats</option>" +
+            "<option value = 21>Utility</option>" +
+            "<option value = 22>Trains</option>";
         if ($("#rtype").val() == "norm") {
             $("#rest").hide();
             $("#file").hide();
             $("#vclass").hide();
-            $("#rclass").hide();
             $("#sveh").hide();
         } else if ($("#rtype").val() == "rest") {
             $("#rest").show();
             $("#file").hide();
             $("#vclass").hide();
-            $("#rclass").hide();
             $("#sveh").hide();
         } else if ($("#rtype").val() == "class") {
+            document.getElementById("register_vclass").innerHTML = 
+                "<option value = -1>Custom</option>" +
+                html;
             $("#rest").hide();
             if ($("#register_vclass").val() == "-1") {
                 $("#file").show();
@@ -169,10 +194,12 @@ $(function() {
             $("#rclass").hide();
             $("#sveh").hide();
         } else if ($("#rtype").val() == "rand") {
+            document.getElementById("register_vclass").innerHTML = 
+                "<option value = -2>Any</option>" +
+                html;
             $("#rest").hide();
             $("#file").show();
-            $("#vclass").hide();
-            $("#rclass").show();
+            $("#vclass").show();
             $("#sveh").show();
         };
     });
@@ -197,7 +224,6 @@ $(function() {
             restrict: $("#restrict").val(),
             filename: $("#filename").val(),
             vclass: $("#register_vclass").val(),
-            vclass: $("#register_rclass").val(),
             svehicle: $("#svehicle").val()
         }));
     });
@@ -350,7 +376,7 @@ $(function() {
         } else if ($("#edit_track_access0").val() == "pub") {
             access = "public"
         };
-        document.getElementById("warning").innerHTML = "Do you really want to overwrite " + access + $("#edit_name").val() + "' ?";
+        document.getElementById("warning").innerHTML = "Do you really want to overwrite " + access + " track '" + $("#edit_name").val() + "' ?";
         $("#confirmPanel").show();
         confirmOpen = true;
     });

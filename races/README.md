@@ -49,7 +49,7 @@ For the following **`/races ai`** commands, [access] = {'pvt', 'pub'} where 'pvt
 **`/race speedo (unit)`** - change unit of speed measurement to (unit) = {imperial, metric}; otherwise toggle display of speedometer if (unit) is not specified\
 **`/race funds`** - view available funds\
 **`/race dstyle (style number)`** - change the driving style of bots (number from 0 to 2147483647) defaults: 1076625980 https://vespura.com/fivem/drivingstyle/\
-**`/race savep`** - save the tuning of the vehicle in which the player is in memory\
+**`/race savep`** - save the tuning of the vehicle in which the player is in memory; or zeroing it if the player is outside of any vehicle\
 **`/race loadp`** - replace the current vehicle tuning with tuning from memory\
 **`/race panel (panel)`** - display (panel) = {edit, support} panel; otherwise display register panel if (panel) is not specified
 
